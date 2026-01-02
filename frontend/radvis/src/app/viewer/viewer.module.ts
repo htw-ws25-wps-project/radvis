@@ -52,6 +52,7 @@ import { FahrradroutenProviderService } from 'src/app/viewer/viewer-shared/servi
 import { ViewerSharedModule } from 'src/app/viewer/viewer-shared/viewer-shared.module';
 import { WegweisendeBeschilderungModule } from 'src/app/viewer/wegweisende-beschilderung/wegweisende-beschilderung.module';
 import { WeitereKartenebenenModule } from 'src/app/viewer/weitere-kartenebenen/weitere-kartenebenen.module';
+import { MaengelModule } from './maengel/maengel.module' ;
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { WeitereKartenebenenModule } from 'src/app/viewer/weitere-kartenebenen/w
   ],
   exports: [ExportButtonComponent],
   imports: [
+    MaengelModule,
     BrowserModule,
     BrowserAnimationsModule,
     ViewerRoutingModule,
