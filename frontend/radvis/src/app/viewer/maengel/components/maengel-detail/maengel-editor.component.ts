@@ -1,15 +1,20 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {map} from "rxjs/operators";
-import {MatToolbar} from "@angular/material/toolbar";
-import {MatIcon} from "@angular/material/icon";
+import {CommonModule} from "@angular/common";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
+
 
 @Component({
   selector: 'rad-maengel-detail',
   standalone: true,
   imports: [
-    MatToolbar,
-    MatIcon
+    CommonModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
   ],
   templateUrl: './maengel-editor.component.html',
   styleUrl: './maengel-editor.component.scss',
