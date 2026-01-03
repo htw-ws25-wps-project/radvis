@@ -51,6 +51,8 @@ import { WegweisendeBeschilderungRoutingService } from 'src/app/viewer/wegweisen
 import invariant from 'tiny-invariant';
 import { FAHRRADZAEHLSTELLE } from 'src/app/viewer/fahrradzaehlstelle/models/fahrradzaehlstelle.infrastruktur';
 import { FahrradzaehlstelleRoutingService } from 'src/app/viewer/fahrradzaehlstelle/services/fahrradzaehlstelle-routing.service';
+import { MAENGEL } from 'src/app/viewer/maengel/models/maengel.infrastruktur';
+import { MaengelRoutingService } from 'src/app/viewer/maengel/services/maengel-routing.service'
 
 interface LayerEintrag {
   anzeigeNameFn: (f: RadVisFeature) => string;
@@ -75,6 +77,7 @@ export class LayerRegistryService {
     servicestationRoutingService: ServicestationRoutingService,
     leihstationRoutingService: LeihstationRoutingService,
     fahrradzaehlstelleRoutingService: FahrradzaehlstelleRoutingService,
+    maengelRoutingService: MaengelRoutingService,
     weitereKartenebenenRoutingService: WeitereKartenebenenRoutingService,
     weitereKartenebenenService: WeitereKartenebenenService,
     sanitizer: DomSanitizer,
@@ -133,6 +136,7 @@ export class LayerRegistryService {
       FAHRRADZAEHLSTELLE,
       fahrradzaehlstelleRoutingService
     );
+    const maengelLayerEintrag: LayerEintrag = this.defaultInfrastrukturEintrag(MAENGEL, maengelRoutingService);
 
     const knotenLayerEintrag: LayerEintrag = {
       iconFileName: 'icon-knoten',
@@ -204,6 +208,7 @@ export class LayerRegistryService {
       [SERVICESTATIONEN.name, servicestationLayerEintrag],
       [LEIHSTATIONEN.name, leihstationLayerEintrag],
       [FAHRRADZAEHLSTELLE.name, fahrradzaehlstellenLayerEintrag],
+      [MAENGEL.name, maengelLayerEintrag],
       [KantenHighlightLayerComponent.LAYER_ID, kanteLayerEintrag],
       [RadvisKnotenLayerComponent.LAYER_NAME, knotenLayerEintrag],
       [KnotenHighlightLayerComponent.LAYER_ID, knotenLayerEintrag],
