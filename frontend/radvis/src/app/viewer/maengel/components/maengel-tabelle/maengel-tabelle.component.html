@@ -1,0 +1,14 @@
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Issue</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let mangel of maengel">
+    <td>{{ mangel.id }}</td>
+    <td>{{ getIssueLabel(mangel.issue) }}</td>
+  </tr>
+  </tbody>
+</table>
