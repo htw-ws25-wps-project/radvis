@@ -1,36 +1,20 @@
 import { Injectable } from '@angular/core';
 import { AbstractInfrastrukturenFilterService } from 'src/app/viewer/viewer-shared/services/abstract-infrastrukturen-filter.service';
-import { InfrastrukturenSelektionService } from 'src/app/viewer/viewer-shared/services/infrastrukturen-selektion.service';
-import { FilterQueryParamsService } from 'src/app/viewer/viewer-shared/services/filter-query-params.service';
-import { MAENGEL } from '../models/maengel.infrastruktur';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MaengelFilterService
-  extends AbstractInfrastrukturenFilterService<any> {
+export class MaengelFilterService extends AbstractInfrastrukturenFilterService {
 
-  constructor(
-    infrastrukturenSelektionService: InfrastrukturenSelektionService,
-    filterQueryParamsService: FilterQueryParamsService
-  ) {
-    super(
-      infrastrukturenSelektionService,
-      MAENGEL,
-      filterQueryParamsService
-    );
-
-    this.init();
+  constructor() {
+    super();
   }
 
-  protected getAll(): Promise<any[]> {
-    return Promise.resolve([]);
-  }
-
-  protected getInfrastrukturValueForKey(
-    item: any,
-    key: string
-  ): string | string[] {
-    return item[key];
+  /**
+   * Wird vom Viewer genutzt, um Tabellen- und Kartenwerte
+   * konsistent aufzulösen.
+   */
+  public getInfrastrukturValueForKey(key: string): string {
+    return key;
   }
 }
