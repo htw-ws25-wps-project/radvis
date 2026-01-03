@@ -190,7 +190,7 @@ const routes: Routes = [
         canDeactivate: [discardGuard],
       },
       {
-        path: 'maengel/:id',
+        path: 'viewer/maengel/:id',
         component: MaengelEditorComponent,
         resolve: {
           mangel: MaengelDetailResolver
