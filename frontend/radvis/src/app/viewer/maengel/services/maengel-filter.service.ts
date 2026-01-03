@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AbstractInfrastrukturenFilterService } from 'src/app/viewer/viewer-shared/services/abstract-infrastrukturen-filter.service';
 import { InfrastrukturenSelektionService } from 'src/app/viewer/viewer-shared/services/infrastrukturen-selektion.service';
 import { FilterQueryParamsService } from 'src/app/viewer/viewer-shared/services/filter-query-params.service';
-import { Infrastruktur } from 'src/app/viewer/viewer-shared/models/infrastruktur';
 import { MAENGEL } from '../models/maengel.infrastruktur';
 
 @Injectable({
