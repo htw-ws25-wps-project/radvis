@@ -1,0 +1,26 @@
+<ng-container *ngIf="mangel$ | async as mangel">
+
+  <mat-toolbar>
+    <h2 class="flex-grow">Mangel #{{ mangel.id }}</h2>
+    <button mat-icon-button (click)="onClose()">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <rad-attribute-editor [showHeader]="false">
+    <ul class="hinweis-liste">
+      <li><strong>Issue:</strong> {{ mangel.issue }}</li>
+
+      <li *ngIf="mangel.beschreibung">
+        <strong>Beschreibung:</strong> {{ mangel.beschreibung }}
+      </li>
+
+      <li>
+        <strong>Standort:</strong>
+        {{ mangel.geometrie.coordinates[1] }},
+        {{ mangel.geometrie.coordinates[0] }}
+      </li>
+    </ul>
+  </rad-attribute-editor>
+
+</ng-container>
