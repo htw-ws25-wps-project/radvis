@@ -1,5 +1,4 @@
 <ng-container *ngIf="mangel$ | async as mangel">
-
   <mat-toolbar>
     <h2 class="flex-grow">Mangel #{{ mangel.id }}</h2>
     <button mat-icon-button (click)="onClose()">
@@ -16,9 +15,8 @@
 
     <li>
       <strong>Standort:</strong>
-      {{ mangel.geometrie.coordinates[1] }},
-      {{ mangel.geometrie.coordinates[0] }}
+      {{ mangel.latitude }}, {{ mangel.longitude }}
     </li>
-  </ul>
 
+  </ul>
 </ng-container>

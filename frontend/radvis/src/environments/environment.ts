@@ -22,6 +22,7 @@ import { Environment } from './environment.type';
 export const environment: Environment = {
   production: false,
   loginUrl: 'http://localhost:4200/saml2/authenticate/SSO',
+  useMockBackend: true,
   matomoConfig: {} as MatomoConfiguration,
 };
 

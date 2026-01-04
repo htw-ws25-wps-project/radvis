@@ -72,7 +72,9 @@ import { WeitereKartenebenenRoutingService } from 'src/app/viewer/weitere-karten
 import { weitereKartenebenenGuard } from 'src/app/viewer/weitere-kartenebenen/services/weitere-kartenebenen.guard';
 import { weitereKartenebenenResolver } from 'src/app/viewer/weitere-kartenebenen/services/weitere-kartenebenen.resolver';
 import {MaengelEditorComponent} from "./maengel/components/maengel-editor/maengel-editor.component";
-import {MaengelDetailResolver} from "./maengel/services/maengel-detail.resolver";
+import { MaengelToolComponent } from 'src/app/viewer/maengel/components/maengel-tool/maengel-tool.component';
+import { MaengelTabelleComponent } from 'src/app/viewer/maengel/components/maengel-tabelle/maengel-tabelle.component';
+
 
 const routes: Routes = [
   {
@@ -125,6 +127,25 @@ const routes: Routes = [
         path: `${ANPASSUNGSWUNSCH.pathElement}/:id`,
         component: AnpassungswunschToolComponent,
         children: AnpassungenRoutingService.getChildRoutes(),
+      },
+      {
+        path: MAENGEL.pathElement, // 'maengel'
+        component: MaengelToolComponent,
+        children: [
+          {
+            path: '',
+            component: MaengelTabelleComponent,
+          },
+          {
+            path: 'create',
+            component: MaengelEditorComponent,
+            canDeactivate: [discardGuard],
+          },
+          {
+            path: ':id',
+            component: MaengelEditorComponent,
+          },
+        ],
       },
       {
         path: `${FURTEN_KREUZUNGEN.pathElement}/new`,
@@ -188,13 +209,6 @@ const routes: Routes = [
         component: ServicestationEditorComponent,
         data: { isCreator: true },
         canDeactivate: [discardGuard],
-      },
-      {
-        path: 'viewer/maengel/:id',
-        component: MaengelEditorComponent,
-        resolve: {
-          mangel: MaengelDetailResolver
-        }
       },
       {
         path: `${SERVICESTATIONEN.pathElement}/:id`,

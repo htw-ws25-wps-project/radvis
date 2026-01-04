@@ -10,7 +10,10 @@ export class MaengelListResolver implements Resolve<any[]> {
 
   constructor(private http: HttpClient) {}
 
-  resolve(): Observable<any[]> {
-    return this.http.get<any[]>('/api/reports');
-  }
-}
+  resolve(): Observable<MaengelUI[]> {
+    return this.http
+      .get<ReportBackendDTO[]>('/api/reports')
+      .pipe(
+        map(list => list.map(mapReportToMaengel))
+      );
+}}

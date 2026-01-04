@@ -1,33 +1,33 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {map} from "rxjs/operators";
-import {CommonModule} from "@angular/common";
-import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatButtonModule} from "@angular/material/button";
-import {MatIconModule} from "@angular/material/icon";
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
+import { MaengelService } from '../../services/maengel.service';
+import { MaengelListenView } from '../../models/maengel-listen-view';
 
 @Component({
   selector: 'rad-maengel-detail',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-  ],
   templateUrl: './maengel-editor.component.html',
-  styleUrl: './maengel-editor.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./maengel-editor.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class MaengelEditorComponent {
 
-  mangel$ = this.route.data.pipe(
-    map(data => data['mangel'])
-  );
+  mangel$: Observable<MaengelListenView>;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private maengelService: MaengelService
+  ) {
+    this.mangel$ = this.route.paramMap.pipe(
+      map(params => Number(params.get('id'))),
+      switchMap(id => this.maengelService.getById(id))
+    );
+  }
 
   onClose(): void {
+    history.back();
   }
 }

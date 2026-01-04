@@ -17,4 +17,5 @@ export interface Environment {
   production: boolean;
   loginUrl: string;
   matomoConfig: MatomoConfiguration;
+  useMockBackend: boolean;
 }

@@ -16,6 +16,7 @@ import { MaengelFilterService } from '../../services/maengel-filter.service';
   selector: 'rad-maengel-layer',
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class MaengelLayerComponent
   extends AbstractInfrastrukturLayerComponent<any>
@@ -42,8 +43,18 @@ export class MaengelLayerComponent
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
-  protected convertToFeature(_: any): Feature<Geometry>[] {
-    return [];
+  protected convertToFeature(item: any): Feature<Geometry>[] {
+    if (!item.latitude || !item.longitude) {
+      return [];
+    }
+
+    const feature = new Feature({
+      geometry: new Point([item.longitude, item.latitude]),
+    });
+
+    feature.setId(item.id);
+
+    return [feature];
   }
 
   protected extractIdFromFeature(hf: RadVisFeature): number {

@@ -1,15 +1,28 @@
-<table mat-table [dataSource]="maengel">
+<rad-infrastruktur-tabelle-layout
+  *ngIf="data$ | async as data"
+  [data]="data"
+  [spaltenDefinition]="spaltenDefinition"
+  [filteredSpalten]="(filteredSpalten$ | async) ?? []"
+  [fetching]="maengelFilterService.fetching"
+  (selectRow)="onSelectRecord($event)"
+  (changeBreakpointState)="onChangeBreakpointState($event)"
+>
 
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef>ID</th>
-    <td mat-cell *matCellDef="let m">{{ m.id }}</td>
-  </ng-container>
+  <button
+    class="action-buttons"
+    [ngClass]="isSmallViewport
+      ? 'mat-mdc-menu-item'
+      : 'mdc-button mdc-button--outlined mat-mdc-outlined-button'"
+    (click)="onFilterReset()"
+  >
+    <mat-icon>filter_alt_off</mat-icon>
+    Alle Filter zurücksetzen
+  </button>
 
-  <ng-container matColumnDef="issue">
-    <th mat-header-cell *matHeaderCellDef>Issue</th>
-    <td mat-cell *matCellDef="let m">{{ m.issue }}</td>
-  </ng-container>
+  <rad-infrastruktur-tabelle-spalte
+    *ngFor="let def of spaltenDefinition"
+    [spaltenDefinition]="def"
+    [getElementValueFn]="getElementValue">
+  </rad-infrastruktur-tabelle-spalte>
 
-  <tr mat-header-row *matHeaderRowDef="['id','issue']"></tr>
-  <tr mat-row *matRowDef="let row; columns: ['id','issue']"></tr>
-</table>
+</rad-infrastruktur-tabelle-layout>
