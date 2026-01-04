@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -10,6 +11,7 @@ import { ViewerSharedModule } from 'src/app/viewer/viewer-shared/viewer-shared.m
 import { InfrastrukturToken } from 'src/app/viewer/viewer-shared/models/infrastruktur';
 import { MAENGEL } from './models/maengel.infrastruktur';
 
+import { MaengelToolComponent } from './components/maengel-tool/maengel-tool.component';
 import { MaengelLayerComponent } from './components/maengel-layer/maengel-layer.component';
 import { MaengelTabelleComponent } from './components/maengel-tabelle/maengel-tabelle.component';
 import { MaengelEditorComponent } from './components/maengel-editor/maengel-editor.component';
@@ -17,6 +19,7 @@ import { MaengelFilterService } from './services/maengel-filter.service';
 
 @NgModule({
   declarations: [
+    MaengelToolComponent,
     MaengelLayerComponent,
     MaengelTabelleComponent,
     MaengelEditorComponent,
@@ -28,6 +31,7 @@ import { MaengelFilterService } from './services/maengel-filter.service';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
+    RouterModule,
   ],
   providers: [
     {

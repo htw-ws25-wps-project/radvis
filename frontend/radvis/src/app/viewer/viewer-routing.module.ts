@@ -71,6 +71,7 @@ import { WeitereKartenebenenDetailViewComponent } from 'src/app/viewer/weitere-k
 import { WeitereKartenebenenRoutingService } from 'src/app/viewer/weitere-kartenebenen/services/weitere-kartenebenen-routing.service';
 import { weitereKartenebenenGuard } from 'src/app/viewer/weitere-kartenebenen/services/weitere-kartenebenen.guard';
 import { weitereKartenebenenResolver } from 'src/app/viewer/weitere-kartenebenen/services/weitere-kartenebenen.resolver';
+import { MAENGEL } from 'src/app/viewer/maengel/models/maengel.infrastruktur';
 import {MaengelEditorComponent} from "./maengel/components/maengel-editor/maengel-editor.component";
 import { MaengelToolComponent } from 'src/app/viewer/maengel/components/maengel-tool/maengel-tool.component';
 import { MaengelTabelleComponent } from 'src/app/viewer/maengel/components/maengel-tabelle/maengel-tabelle.component';
