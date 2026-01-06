@@ -1,33 +1,30 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {map} from "rxjs/operators";
-import {CommonModule} from "@angular/common";
-import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatButtonModule} from "@angular/material/button";
-import {MatIconModule} from "@angular/material/icon";
-
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ReportBackendDTO } from '../../models/report-backend.dto';
 
 @Component({
-  selector: 'rad-maengel-detail',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-  ],
+  selector: 'rad-maengel-editor',
+  standalone: false,
   templateUrl: './maengel-editor.component.html',
-  styleUrl: './maengel-editor.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./maengel-editor.component.scss'],
 })
 export class MaengelEditorComponent {
 
-  mangel$ = this.route.data.pipe(
-    map(data => data['mangel'])
-  );
+  mangel$: Observable<ReportBackendDTO>;
+  isCreator = false;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute) {
+    this.mangel$ = this.route.data.pipe(
+      map(data => data['maengel'] as ReportBackendDTO)
+    );
+
+
+    this.isCreator = this.route.snapshot.data['isCreator'] ?? false;
+  }
 
   onClose(): void {
+    // igual que en otros editores
   }
 }

@@ -38,6 +38,9 @@ import { WeitereKartenebenenService } from 'src/app/viewer/weitere-kartenebenen/
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { InfoModule } from './info/info.module';
+import { MockBackendInterceptor } from './mock-backend.interceptor';
+
+
 
 // Bitte dran denken: Alle APP_INITIALIZER-Endpunkte müssen im Backend in SecurityConfiguration.internalApiFilterChain()
 // als "authenticated" hinzugefügt werden, sonst funktioniert die Anmeldung mit nicht registrierten Benutzern nicht!
@@ -64,6 +67,11 @@ import { InfoModule } from './info/info.module';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RadvisHttpInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MockBackendInterceptor,
       multi: true,
     },
     {

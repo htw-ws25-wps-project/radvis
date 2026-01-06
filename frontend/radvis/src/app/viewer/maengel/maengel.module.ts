@@ -1,20 +1,45 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MAENGEL } from './models/maengel.infrastruktur';
-import { InfrastrukturToken} from "../viewer-shared/models/infrastruktur";
+import { RouterModule } from '@angular/router';
 
+import { MatTableModule } from '@angular/material/table';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+
+import { ViewerSharedModule } from 'src/app/viewer/viewer-shared/viewer-shared.module';
+import { InfrastrukturToken } from 'src/app/viewer/viewer-shared/models/infrastruktur';
+import { MAENGEL } from './models/maengel.infrastruktur';
+
+import { MaengelToolComponent } from './components/maengel-tool/maengel-tool.component';
+import { MaengelLayerComponent } from './components/maengel-layer/maengel-layer.component';
+import { MaengelTabelleComponent } from './components/maengel-tabelle/maengel-tabelle.component';
+import { MaengelEditorComponent } from './components/maengel-editor/maengel-editor.component';
+import { MaengelFilterService } from './services/maengel-filter.service';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    MaengelToolComponent,
+    MaengelLayerComponent,
+    MaengelTabelleComponent,
+    MaengelEditorComponent,
+  ],
   imports: [
-    CommonModule
+    CommonModule,
+    ViewerSharedModule,
+    MatTableModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    RouterModule,
   ],
   providers: [
     {
       provide: InfrastrukturToken,
       useValue: MAENGEL,
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+    MaengelFilterService,
+  ],
 })
-export class MaengelModule { }
+export class MaengelModule {}

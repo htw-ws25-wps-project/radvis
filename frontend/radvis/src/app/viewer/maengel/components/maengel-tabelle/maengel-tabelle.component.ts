@@ -1,24 +1,91 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import {CommonModule} from "@angular/common";
-import {MatTableModule} from "@angular/material/table";
+import { ChangeDetectionStrategy, Component, forwardRef } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { AbstractInfrastrukturenFilterService } from
+    'src/app/viewer/viewer-shared/services/abstract-infrastrukturen-filter.service';
+import { SpaltenDefinition } from
+    'src/app/viewer/viewer-shared/models/spalten-definition';
+import { MaengelRoutingService } from '../../services/maengel-routing.service';
+
+import { MaengelFilterService } from '../../services/maengel-filter.service';
+import { MaengelListenView } from '../../models/maengel-listen-view';
 
 @Component({
   selector: 'rad-maengel-tabelle',
-  standalone: true,
-  imports: [CommonModule, MatTableModule],
   templateUrl: './maengel-tabelle.component.html',
-  styleUrl: './maengel-tabelle.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./maengel-tabelle.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: AbstractInfrastrukturenFilterService,
+      useExisting: forwardRef(() => MaengelFilterService),
+    },
+  ],
+  standalone: false,
 })
 export class MaengelTabelleComponent {
-  @Input()
-  maengel: any[] = [];
 
-  /**
-   * Optionaler Display-Helper.
-   * Kein Mapping, keine Transformation.
-   */
-  getIssueLabel(issue: string): string {
-    return issue;
+  /** Daten aus dem FilterService */
+  data$: Observable<MaengelListenView[]>;
+  selectedMaengelId$: Observable<number | null>;
+
+  /** Spalten wie bei WPS-Tabellen */
+  spaltenDefinition: SpaltenDefinition[] = [
+    {name: 'issue', displayName: 'Issue'},
+    {name: 'beschreibung', displayName: 'Beschreibung'},
+  ];
+
+  /** Gefilterte Spalten */
+  filteredSpalten$: Observable<string[]>;
+
+
+  constructor(
+    public maengelFilterService: MaengelFilterService,
+    private maengelRoutingService: MaengelRoutingService
+  ) {
+    console.log('[MAENGEL TABLE] CONSTRUCTOR');
+    this.data$ = this.maengelFilterService.filteredList$;
+    this.selectedMaengelId$ = this.maengelRoutingService.selectedInfrastrukturId$;
+
+    this.filteredSpalten$ = this.maengelFilterService.filter$.pipe(
+      map(filteredFields => filteredFields.map(f => f.field))
+    );
+    this.data$.subscribe(d =>
+      console.log('[MAENGEL TABLE] data$', d)
+    );
+
+
+    console.log('MaengelTabelleComponent INIT');
+
   }
+
+  /** 1:1 wie Anpassungswunsch */
+  getElementValue: (item: MaengelListenView, key: string) => string | string[] = (
+    item,
+    key
+  ) => {
+    const value = (item as any)[key];
+
+    if (key === 'beschreibung' && typeof value === 'string' && value.length > 50) {
+      return value.slice(0, 47) + '...';
+    }
+
+    return value;
+  };
+  isSmallViewport = false;
+
+  onChangeBreakpointState(isSmall: boolean): void {
+    this.isSmallViewport = isSmall;
+  }
+
+  onFilterReset(): void {
+    this.maengelFilterService.reset();
+  }
+
+  onSelectRecord(id: number): void {
+    // si no tienes routing todavía, puedes dejarlo vacío
+    // o hacer console.log(id)
+  }
+
 }
