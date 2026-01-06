@@ -14,11 +14,11 @@ export class MaengelToolComponent {
 
   constructor(
     private infrastrukturenSelektionService: InfrastrukturenSelektionService,
-    private maengelFilterService: MaengelFilterService // ✅ AQUÍ
+    private maengelFilterService: MaengelFilterService
   ) {
     this.infrastrukturenSelektionService.selectInfrastrukturen(MAENGEL);
 
-    // 🔑 Trigge
+    //  Trigger
     this.maengelFilterService.refetchData();
   }
 }
