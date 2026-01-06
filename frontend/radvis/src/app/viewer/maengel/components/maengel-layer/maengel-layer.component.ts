@@ -21,7 +21,6 @@ import { MaengelListenView } from '../../models/maengel-listen-view';
 @Component({
   selector: 'rad-maengel-layer',
   templateUrl: '',
-  styleUrls: ['./maengel-layer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: false,
 })
