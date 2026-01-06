@@ -26,7 +26,6 @@ export class MaengelFilterService
       filterQueryParamsService
     );
     this.init();
-
   }
 
   protected getAll(): Promise<MaengelListenView[]> {
@@ -41,10 +40,21 @@ export class MaengelFilterService
       });
   }
 
-  protected getInfrastrukturValueForKey(
+  public getInfrastrukturValueForKey(
     item: MaengelListenView,
     key: string
-  ): string | string[] {
-    return (item as any)[key];
+  ): string {
+    const EMPTY = '';
+
+    switch (key) {
+      case 'issue':
+        return item.issue ?? EMPTY;
+
+      case 'beschreibung':
+        return item.beschreibung ?? EMPTY;
+
+      default:
+        return EMPTY;
+    }
   }
 }
