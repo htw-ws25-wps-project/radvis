@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IsActiveMatchOptions, Router } from '@angular/router';
+import { IsActiveMatchOptions } from '@angular/router';
 import { InfrastrukturenSelektionService } from
     'src/app/viewer/viewer-shared/services/infrastrukturen-selektion.service';
 import {ViewerRoutingService} from "../../../viewer-shared/services/viewer-routing.service";
