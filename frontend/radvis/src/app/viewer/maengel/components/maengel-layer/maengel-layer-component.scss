@@ -1,0 +1,22 @@
+form {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+}
+
+rad-ol-popup {
+  cursor: auto;
+}
+
+form button {
+  align-self: flex-end;
+}
+
+.horizontal-wrapper {
+  display: flex;
+  column-gap: 1em;
+
+  mat-form-field {
+    width: 8em;
+  }
+}

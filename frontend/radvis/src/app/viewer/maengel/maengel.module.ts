@@ -16,7 +16,13 @@ import { MaengelLayerComponent } from './components/maengel-layer/maengel-layer.
 import { MaengelTabelleComponent } from './components/maengel-tabelle/maengel-tabelle.component';
 import { MaengelEditorComponent } from './components/maengel-editor/maengel-editor.component';
 import { MaengelFilterService } from './services/maengel-filter.service';
-import {MatSort} from "@angular/material/sort";
+import {MatSortModule} from "@angular/material/sort";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatTabsModule} from "@angular/material/tabs";
+import {
+  AbstractInfrastrukturenRoutingService
+} from "../viewer-shared/services/abstract-infrastrukturen-routing.service";
+import {MaengelRoutingService} from "./services/maengel-routing.service";
 
 @NgModule({
   declarations: [
@@ -33,12 +39,23 @@ import {MatSort} from "@angular/material/sort";
     MatIconModule,
     MatButtonModule,
     RouterModule,
-    MatSort,
+    MatSortModule,
+    MatTooltipModule,
+    MatTabsModule
+  ],
+  exports: [
+    MaengelLayerComponent,
+    MaengelTabelleComponent,
   ],
   providers: [
     {
       provide: InfrastrukturToken,
       useValue: MAENGEL,
+      multi: true,
+    },
+    {
+      provide: AbstractInfrastrukturenRoutingService,
+      useExisting: MaengelRoutingService,
       multi: true,
     },
     MaengelFilterService,
