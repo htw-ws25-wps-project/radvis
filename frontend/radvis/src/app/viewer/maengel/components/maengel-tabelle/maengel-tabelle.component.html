@@ -1,14 +1,15 @@
-<table>
-  <thead>
-  <tr>
-    <th>ID</th>
-    <th>Issue</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let mangel of maengel">
-    <td>{{ mangel.id }}</td>
-    <td>{{ getIssueLabel(mangel.issue) }}</td>
-  </tr>
-  </tbody>
+<table mat-table [dataSource]="maengel">
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>ID</th>
+    <td mat-cell *matCellDef="let m">{{ m.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="issue">
+    <th mat-header-cell *matHeaderCellDef>Issue</th>
+    <td mat-cell *matCellDef="let m">{{ m.issue }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="['id','issue']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['id','issue']"></tr>
 </table>
