@@ -16,6 +16,7 @@ import { MaengelLayerComponent } from './components/maengel-layer/maengel-layer.
 import { MaengelTabelleComponent } from './components/maengel-tabelle/maengel-tabelle.component';
 import { MaengelEditorComponent } from './components/maengel-editor/maengel-editor.component';
 import { MaengelFilterService } from './services/maengel-filter.service';
+import {MatSort} from "@angular/material/sort";
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { MaengelFilterService } from './services/maengel-filter.service';
     MatIconModule,
     MatButtonModule,
     RouterModule,
+    MatSort,
   ],
   providers: [
     {
