@@ -1,4 +1,3 @@
-<pre>{{ data$ | async | json }}</pre>
 <rad-infrastruktur-tabelle-layout
   *ngIf="data$ | async as data"
   [data]="data"
@@ -6,7 +5,10 @@
   [filteredSpalten]="(filteredSpalten$ | async) ?? []"
   [selectedId]="selectedMaengelId$ | async"
   [fetching]="maengelFilterService.fetching"
-  (selectItem)="onSelectRecord($event)"
+  (selectRow)="onSelectRecord($event)"
+  matSort
+  #sort="matSort"
+  [sort]="sort"
   (changeBreakpointState)="onChangeBreakpointState($event)"
 >
 

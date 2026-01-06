@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, forwardRef } from '@angular/core';
+import {ChangeDetectionStrategy, Component, forwardRef, ViewChild} from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -10,6 +10,7 @@ import { MaengelRoutingService } from '../../services/maengel-routing.service';
 
 import { MaengelFilterService } from '../../services/maengel-filter.service';
 import { MaengelListenView } from '../../models/maengel-listen-view';
+import {MatSort} from "@angular/material/sort";
 
 @Component({
   selector: 'rad-maengel-tabelle',
@@ -25,6 +26,7 @@ import { MaengelListenView } from '../../models/maengel-listen-view';
   standalone: false,
 })
 export class MaengelTabelleComponent {
+  @ViewChild(MatSort) sort!: MatSort;
 
   /** Daten aus dem FilterService */
   data$: Observable<MaengelListenView[]>;
@@ -84,8 +86,8 @@ export class MaengelTabelleComponent {
   }
 
   onSelectRecord(id: number): void {
-    // si no tienes routing todavía, puedes dejarlo vacío
-    // o hacer console.log(id)
+    this.maengelRoutingService.toInfrastrukturEditor(id);
   }
+
 
 }
