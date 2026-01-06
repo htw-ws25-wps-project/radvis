@@ -211,6 +211,13 @@ const routes: Routes = [
         canDeactivate: [discardGuard],
       },
       {
+        path: 'viewer/maengel/:id',
+        component: MaengelEditorComponent,
+        resolve: {
+          mangel: MaengelDetailResolver
+        }
+      },
+      {
         path: `${SERVICESTATIONEN.pathElement}/:id`,
         component: ServicestationToolComponent,
         children: ServicestationRoutingService.getChildRoutes(),
