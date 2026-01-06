@@ -1,33 +1,30 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-
-import { MaengelService } from '../../services/maengel.service';
-import { MaengelListenView } from '../../models/maengel-listen-view';
+import { map } from 'rxjs/operators';
+import { ReportBackendDTO } from '../../models/report-backend.dto';
 
 @Component({
-  selector: 'rad-maengel-detail',
+  selector: 'rad-maengel-editor',
+  standalone: false,
   templateUrl: './maengel-editor.component.html',
   styleUrls: ['./maengel-editor.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false,
 })
 export class MaengelEditorComponent {
 
-  mangel$: Observable<MaengelListenView>;
+  mangel$: Observable<ReportBackendDTO>;
+  isCreator = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private maengelService: MaengelService
-  ) {
-    this.mangel$ = this.route.paramMap.pipe(
-      map(params => Number(params.get('id'))),
-      switchMap(id => this.maengelService.getById(id))
+  constructor(private route: ActivatedRoute) {
+    this.mangel$ = this.route.data.pipe(
+      map(data => data['maengel'] as ReportBackendDTO)
     );
+
+
+    this.isCreator = this.route.snapshot.data['isCreator'] ?? false;
   }
 
   onClose(): void {
-    history.back();
+    // igual que en otros editores
   }
 }

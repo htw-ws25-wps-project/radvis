@@ -1,10 +1,12 @@
+<pre>{{ data$ | async | json }}</pre>
 <rad-infrastruktur-tabelle-layout
   *ngIf="data$ | async as data"
   [data]="data"
   [spaltenDefinition]="spaltenDefinition"
   [filteredSpalten]="(filteredSpalten$ | async) ?? []"
+  [selectedId]="selectedMaengelId$ | async"
   [fetching]="maengelFilterService.fetching"
-  (selectRow)="onSelectRecord($event)"
+  (selectItem)="onSelectRecord($event)"
   (changeBreakpointState)="onChangeBreakpointState($event)"
 >
 

@@ -6,6 +6,7 @@ import { AbstractInfrastrukturenFilterService } from
     'src/app/viewer/viewer-shared/services/abstract-infrastrukturen-filter.service';
 import { SpaltenDefinition } from
     'src/app/viewer/viewer-shared/models/spalten-definition';
+import { MaengelRoutingService } from '../../services/maengel-routing.service';
 
 import { MaengelFilterService } from '../../services/maengel-filter.service';
 import { MaengelListenView } from '../../models/maengel-listen-view';
@@ -27,6 +28,7 @@ export class MaengelTabelleComponent {
 
   /** Daten aus dem FilterService */
   data$: Observable<MaengelListenView[]>;
+  selectedMaengelId$: Observable<number | null>;
 
   /** Spalten wie bei WPS-Tabellen */
   spaltenDefinition: SpaltenDefinition[] = [
@@ -39,10 +41,12 @@ export class MaengelTabelleComponent {
 
 
   constructor(
-    public maengelFilterService: MaengelFilterService
+    public maengelFilterService: MaengelFilterService,
+    private maengelRoutingService: MaengelRoutingService
   ) {
     console.log('[MAENGEL TABLE] CONSTRUCTOR');
     this.data$ = this.maengelFilterService.filteredList$;
+    this.selectedMaengelId$ = this.maengelRoutingService.selectedInfrastrukturId$;
 
     this.filteredSpalten$ = this.maengelFilterService.filter$.pipe(
       map(filteredFields => filteredFields.map(f => f.field))
@@ -50,6 +54,9 @@ export class MaengelTabelleComponent {
     this.data$.subscribe(d =>
       console.log('[MAENGEL TABLE] data$', d)
     );
+
+
+    console.log('MaengelTabelleComponent INIT');
 
   }
 

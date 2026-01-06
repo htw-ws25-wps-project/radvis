@@ -19,16 +19,16 @@ export class MaengelFilterService
     filterQueryParamsService: FilterQueryParamsService,
     private http: HttpClient
   ) {
+    console.log('🔥 MaengelFilterService CONSTRUCTOR');
     super(
       infrastrukturenSelektionService,
       MAENGEL,
       filterQueryParamsService
     );
     this.init();
-    // 🔴 DEBUG
-    (this as any).loadAll?.();
 
   }
+
   protected getAll(): Promise<MaengelListenView[]> {
     console.log('[MAENGEL] getAll() CALLED');
 
@@ -37,14 +37,7 @@ export class MaengelFilterService
       .toPromise()
       .then(reports => {
         console.log('[MAENGEL] backend reports', reports);
-
-        return reports.map(r => ({
-          id: r.id,
-          issue: r.issue,
-          beschreibung: r.description,
-          latitude: r.latitude,
-          longitude: r.longitude,
-        }));
+        return reports.map(mapReportToMaengelList);
       });
   }
 
