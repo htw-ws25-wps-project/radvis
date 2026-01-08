@@ -20,7 +20,7 @@ import { MaengelListenView } from '../../models/maengel-listen-view';
 
 @Component({
   selector: 'rad-maengel-layer',
-  templateUrl: '',
+  template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: false,
 })
