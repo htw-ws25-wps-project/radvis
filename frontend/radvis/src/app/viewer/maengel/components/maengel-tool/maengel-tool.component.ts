@@ -5,6 +5,7 @@ import { InfrastrukturenSelektionService } from
 import {ViewerRoutingService} from "../../../viewer-shared/services/viewer-routing.service";
 import { MaengelFilterService } from '../../services/maengel-filter.service';
 import { MAENGEL } from '../../models/maengel.infrastruktur';
+import {MaengelService} from "../../services/maengel.service";
 
 @Component({
   selector: 'rad-maengel-tool',
@@ -27,6 +28,7 @@ export class MaengelToolComponent {
     private viewerRoutingService: ViewerRoutingService,
     private infrastrukturenSelektionService: InfrastrukturenSelektionService,
     private maengelFilterService: MaengelFilterService,
+    private maengelService: MaengelService,
   ) {
     this.infrastrukturenSelektionService.selectInfrastrukturen(MAENGEL);
     this.maengelFilterService.refetchData();

@@ -3,7 +3,6 @@ import Feature, { FeatureLike } from 'ol/Feature';
 import { Geometry, Point } from 'ol/geom';
 import VectorLayer from 'ol/layer/Vector';
 import { Style } from 'ol/style';
-import { fromLonLat } from 'ol/proj';
 
 import { RadVisFeature } from 'src/app/shared/models/rad-vis-feature';
 import { OlMapService } from 'src/app/shared/services/ol-map.service';
@@ -55,21 +54,8 @@ export class MaengelLayerComponent
 
 
   protected convertToFeature(infrastruktur: MaengelListenView): Feature<Geometry>[] {
-    if (
-      infrastruktur.longitude == null ||
-      infrastruktur.latitude == null
-    ) {
-      return [];
-    }
+    const feature = new Feature(new Point(infrastruktur.geometrie.coordinates));
 
-    const feature = new Feature(
-      new Point(
-        fromLonLat([
-          infrastruktur.longitude,
-          infrastruktur.latitude,
-        ])
-      )
-    );
 
     feature.setId(infrastruktur.id);
 
