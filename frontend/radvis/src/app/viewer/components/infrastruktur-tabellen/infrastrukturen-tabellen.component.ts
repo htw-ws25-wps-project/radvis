@@ -38,6 +38,7 @@ import { SERVICESTATIONEN } from 'src/app/viewer/servicestation/models/servicest
 import { Infrastruktur } from 'src/app/viewer/viewer-shared/models/infrastruktur';
 import { InfrastrukturenSelektionService } from 'src/app/viewer/viewer-shared/services/infrastrukturen-selektion.service';
 import { WEGWEISENDE_BESCHILDERUNG } from 'src/app/viewer/wegweisende-beschilderung/models/wegweisende-beschilderung.infrastruktur';
+import {MAENGEL} from "../../maengel/models/maengel.infrastruktur";
 
 @Component({
   selector: 'rad-infrastrukturen-tabellen',
@@ -117,4 +118,6 @@ export class InfrastrukturenTabellenComponent {
   onToggleMinimization(): void {
     this.minimized = !this.minimized;
   }
+
+  protected readonly MAENGEL = MAENGEL;
 }

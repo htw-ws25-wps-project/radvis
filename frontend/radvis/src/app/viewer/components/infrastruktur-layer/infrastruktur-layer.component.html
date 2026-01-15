@@ -17,6 +17,9 @@
   <rad-fahrradroute-layer *ngIf="selektierteInfrastrukturen.includes(FAHRRADROUTE)"></rad-fahrradroute-layer>
   <rad-anpassungswuensche-layer
     *ngIf="selektierteInfrastrukturen.includes(ANPASSUNGSWUNSCH)"></rad-anpassungswuensche-layer>
+  <rad-maengel-layer
+    *ngIf="selektierteInfrastrukturen.includes(MAENGEL)">
+  </rad-maengel-layer>
   <rad-barriere-layer *ngIf="selektierteInfrastrukturen.includes(BARRIEREN)"></rad-barriere-layer>
   <rad-furten-kreuzungen-layer
     *ngIf="selektierteInfrastrukturen.includes(FURTEN_KREUZUNGEN)"></rad-furten-kreuzungen-layer>
