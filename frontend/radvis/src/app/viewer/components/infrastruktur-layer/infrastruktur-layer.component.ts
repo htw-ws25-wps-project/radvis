@@ -26,6 +26,7 @@ import { Infrastruktur } from 'src/app/viewer/viewer-shared/models/infrastruktur
 import { InfrastrukturenSelektionService } from 'src/app/viewer/viewer-shared/services/infrastrukturen-selektion.service';
 import { WEGWEISENDE_BESCHILDERUNG } from 'src/app/viewer/wegweisende-beschilderung/models/wegweisende-beschilderung.infrastruktur';
 import { FAHRRADZAEHLSTELLE } from 'src/app/viewer/fahrradzaehlstelle/models/fahrradzaehlstelle.infrastruktur';
+import {MAENGEL} from "../../maengel/models/maengel.infrastruktur";
 
 @Component({
   selector: 'rad-infrastruktur-layer',
@@ -50,4 +51,6 @@ export class InfrastrukturLayerComponent {
   constructor(private infrastrukturenSelektionService: InfrastrukturenSelektionService) {
     this.selektierteInfrastrukturen$ = this.infrastrukturenSelektionService.selektierteInfrastrukturen$;
   }
+
+  protected readonly MAENGEL = MAENGEL;
 }

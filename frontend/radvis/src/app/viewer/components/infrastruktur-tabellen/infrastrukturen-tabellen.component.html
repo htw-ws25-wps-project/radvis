@@ -55,6 +55,9 @@
         <rad-fahrradroute-tabelle *ngIf="activeInfrastruktur === FAHRRADROUTE"></rad-fahrradroute-tabelle>
         <rad-importprotokolle-tabelle *ngIf="activeInfrastruktur === IMPORTPROTOKOLLE"></rad-importprotokolle-tabelle>
         <rad-anpassungswunsch-tabelle *ngIf="activeInfrastruktur === ANPASSUNGSWUNSCH"></rad-anpassungswunsch-tabelle>
+        <rad-maengel-tabelle
+          *ngIf="activeInfrastruktur === MAENGEL">
+        </rad-maengel-tabelle>
         <rad-furten-kreuzungen-tabelle
           *ngIf="activeInfrastruktur === FURTEN_KREUZUNGEN"></rad-furten-kreuzungen-tabelle>
         <rad-barrieren-tabelle *ngIf="activeInfrastruktur === BARRIEREN"></rad-barrieren-tabelle>
