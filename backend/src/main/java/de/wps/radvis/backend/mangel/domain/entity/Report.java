@@ -20,6 +20,8 @@ import static org.valid4j.Assertive.require;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Report extends AbstractEntity {
+    private static final int MAX_DESCRIPTION_LENGTH = 1000;
+
     @Enumerated(EnumType.STRING)
     private Issue issue;
 
@@ -36,7 +38,7 @@ public class Report extends AbstractEntity {
         require(geometrie, notNullValue());
 
         if (description != null) {
-            require(description.length() <= 1000,
+            require(description.length() <= MAX_DESCRIPTION_LENGTH,
                     "Beschreibung darf max. 1000 Zeichen haben");
         }
 
