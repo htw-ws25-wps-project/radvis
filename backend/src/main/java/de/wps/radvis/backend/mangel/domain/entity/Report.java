@@ -40,7 +40,7 @@ public class Report extends AbstractEntity {
                     "Beschreibung darf max. 1000 Zeichen haben");
         }
 
-        this.issue = issue;
+        this.issue = (issue != null) ? issue : Issue.KEINE_KATEGORIE;
         this.description = description;
         this.geometrie = geometrie;
         this.creationDate = LocalDateTime.now();
