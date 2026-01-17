@@ -23,12 +23,12 @@ public enum Issue {
     public String getLabel(){ return this.label; }
 
     @JsonCreator
-    public static Issue fromLabel(String value) {
+    public static Issue fromValue(String value) {
         for (Issue issue : Issue.values()) {
-            if (issue.label.equalsIgnoreCase(value)) {
+            if (issue.name().equalsIgnoreCase(value) || issue.label.equalsIgnoreCase(value)) {
                 return issue;
             }
         }
-        throw new IllegalArgumentException("Unknown issue label: " + value);
+        throw new IllegalArgumentException("Unbekannter Issue-Typ: " + value);
     }
 }
