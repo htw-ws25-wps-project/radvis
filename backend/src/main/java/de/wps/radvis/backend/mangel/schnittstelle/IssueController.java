@@ -19,7 +19,6 @@ public class IssueController {
         return List.of(Issue.values());
     }
 
-
     @GetMapping("/issue-labels")
     public List<IssueLabelView> getIssueLabels() {
         return Arrays.stream(Issue.values())
