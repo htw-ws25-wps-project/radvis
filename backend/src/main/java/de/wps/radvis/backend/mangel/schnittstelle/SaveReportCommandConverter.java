@@ -13,7 +13,7 @@ public class SaveReportCommandConverter {
     private static final GeometryFactory GEOMETRY_FACTORY = new GeometryFactory();
 
     public Report toReport(SaveReportCommand command) {
-        Point geometrie = toPoint(command.getLongitude(), command.getLatitude());
+        Point geometrie = toPoint(command.getLatitude(), command.getLongitude());
 
         return Report.builder()
                 .issue(command.getIssue())
@@ -23,11 +23,9 @@ public class SaveReportCommandConverter {
     }
 
     public static Point toPoint(BigDecimal latitude, BigDecimal longitude) {
-        return GEOMETRY_FACTORY.createPoint(
-                new Coordinate(
-                        longitude.doubleValue(),
-                        latitude.doubleValue()
-                )
-        );
+        return GEOMETRY_FACTORY.createPoint(new Coordinate(
+                longitude.doubleValue(), // Longitude ist X
+                latitude.doubleValue()   // Latitude ist Y
+        ));
     }
 }
