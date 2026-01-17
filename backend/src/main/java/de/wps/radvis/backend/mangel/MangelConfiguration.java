@@ -26,5 +26,4 @@ public class MangelConfiguration {
     public ReportService reportService(SaveReportCommandConverter converter) {
         return new ReportService(reportRepository, converter);
     }
-
 }
