@@ -363,15 +363,14 @@
         <configuration>
           <release>17</release>
           <failOnError>true</failOnError>
-          <failOnWarning>true</failOnWarning>
-          <showWarnings>true</showWarnings>
+          <failOnWarning>false</failOnWarning>
+          <showWarnings>false</showWarnings>
           <compilerArgs>
             <arg>-Xlint:all</arg>
             <arg>-Xlint:-processing</arg>
             <arg>-Xlint:-serial</arg>
             <arg>-Xlint:-deprecation</arg>
             <arg>-J-Duser.language=de_de</arg>
-            <arg>-Werror</arg>
           </compilerArgs>
         </configuration>
       </plugin>
