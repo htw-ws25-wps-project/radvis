@@ -1,9 +1,9 @@
 # API-Vertrag: Fachmodul Mängel-Management (RadVIS)
 
-## 1. Fachliche Zuordnung (T13.3)
+## 1. Fachliche Zuordnung 
 * **Backend-Objekt:** `Report` (Entity)
 * **Frontend-Fachobjekt:** `Mangel`
-* **Definition:** Ein `Report` im Backend repräsentiert fachlich einen `Mangel`. Die Begriffe werden synonym verwendet.
+* **Zentrales Erbe:** Alle Entities (`Report`, `ReportPhoto`) erben von **`AbstractEntity`**. Dies garantiert eine konsistente, sequenzbasierte ID-Vergabe (`Long`).
 
 ---
 
@@ -24,54 +24,42 @@ Basis-URL: `/api`
 ## 3. Datenstrukturen & Geometrie 
 
 ### 3.1 SaveReportCommand (Request / POST)
-Übertragung via **multipart/form-data** (aufgrund `@ModelAttribute`).
+Übertragung via **multipart/form-data**.
 
 | Feld | Typ | Pflicht | Beschreibung |
 | :--- | :--- | :--- | :--- |
 | `issue` | `String` | Ja | Technischer Key (z. B. `SCHLAGLOCH`) |
 | `description` | `String` | Nein | Max. 1000 Zeichen |
-| **`latitude`** | `BigDecimal`| Ja | Y-Koordinate (Breitengrad) |
-| **`longitude`** | `BigDecimal`| Ja | X-Koordinate (Längengrad) |
+| **`latitude`** | `BigDecimal`| Ja | Y-Koordinate (WGS84) |
+| **`longitude`** | `BigDecimal`| Ja | X-Koordinate (WGS84) |
 | `files` | `MultipartFile[]` | Nein | Bilder (JPEG/PNG) |
 
-**Geometrie-Logik:** Das Backend (Converter) wandelt `longitude` (X) und `latitude` (Y) in ein `org.locationtech.jts.geom.Point`-Objekt (`geometrie`) um.
+**Geometrie-Logik:** Das Backend wandelt `longitude` (X) und `latitude` (Y) via `GeometryFactory` in einen `org.locationtech.jts.geom.Point` um.
 
 ### 3.2 ReportView (Response / GET & POST)
-Struktur für die Datenübermittlung an das Frontend.
-
 | Feld | Typ | Beschreibung |
 | :--- | :--- | :--- |
-| `id` | `Long` | Eindeutige ID (via `AbstractEntity`) |
-| `issue` | `String` | Das **lesbare Label** (z. B. "Schlagloch") |
+| **`id`** | `Long` | **Zentral generiert via AbstractEntity (pooled sequence)** |
+| `issue` | `String` | Das lesbare Label (via `issue.getLabel()`) |
 | `description` | `String` | Beschreibungstext |
-| **`longitude`** | `double` | X-Wert der JTS-Geometrie |
-| **`latitude`** | `double` | Y-Wert der JTS-Geometrie |
-| `created` | `LocalDateTime` | Erstellungszeitpunkt (`creationDate`) |
+| `longitude` | `double` | X-Wert der JTS-Geometrie |
+| `latitude` | `double` | Y-Wert der JTS-Geometrie |
+| `created` | `LocalDateTime` | Erstellungszeitpunkt |
 
 ---
 
-## 4. Listen- vs. Detailansicht (T13.4)
+## 4. Technische Details zur Persistenz
 
-| Feld | Listenansicht (`GET /reports`) | Detailansicht (`GET /reports/{id}`) |
-| :--- | :---: | :---: |
-| `id`, `issue`, `created` | ✅ | ✅ |
-| `longitude`, `latitude` | ✅ (Karten-Pin) | ✅ (Karten-Pin) |
-| `description` | ❌ | ✅ |
+### 4.1 ID-Generierung
+Das System nutzt einen `pooled` Sequence-Generator (`hibernate_sequence`).
+* **Initial Value:** 1
+* **Increment Size:** 100
+  Das Frontend darf IDs niemals selbst vergeben; sie werden ausschließlich vom Backend generiert und in der Response zurückgegeben.
 
----
-
-## 5. Technische Validierung & Beschränkungen
-
-### 5.1 Foto-Upload (validiert in Converter & Entity)
-* **Formate:** `image/jpeg`, `image/png`.
-* **Einzeldatei:** Max. **10 MB**.
-* **Gesamt-Request:** Max. **30 MB**.
-* **Fehler:** Bei Limit-Überschreitung erfolgt ein `413 Payload Too Large`.
-
-### 5.2 Konsistenz
-* Fehlende Kategorien werden im Backend auf `KEINE_KATEGORIE` gemappt.
-* Die `description` wird auf max. 1000 Zeichen validiert.
+### 4.2 Foto-Validierung
+* **Größen:** Max. 10 MB pro Datei / 30 MB Gesamt.
+* **Typen:** `image/jpeg`, `image/png`.
+* **Speicherung:** Fotos werden als `ReportPhoto` mit einer eigenen ID aus der zentralen Sequenz gespeichert.
 
 ---
-
-**Status:** Finaler API-Contract (Migration RadVIS)
+**Status:** gitAPI-Contract (Stand: 2026-01-18)
