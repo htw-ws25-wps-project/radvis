@@ -18,8 +18,8 @@ public class ReportController {
 
     private final ReportService reportService;
 
-    @PostMapping
-    public ResponseEntity<ReportView> createReport(@RequestBody @Valid SaveReportCommand command) {
+    @PostMapping(consumes = {"multipart/form-data"})
+    public ResponseEntity<ReportView> createReport(@ModelAttribute @Valid SaveReportCommand command) {
         Report created = reportService.create(command);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ReportView(created));
     }
