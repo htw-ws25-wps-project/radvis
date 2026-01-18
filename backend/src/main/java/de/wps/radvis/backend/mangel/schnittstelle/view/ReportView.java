@@ -14,7 +14,6 @@ public record ReportView(
         LocalDateTime created
 ) {
     public ReportView(Report report) {
-        // Initializes view from report, mapping issue/geometry
         this(
                 report.getId(),
                 (report.getIssue() != null ? report.getIssue() : Issue.KEINE_KATEGORIE).getLabel(),
