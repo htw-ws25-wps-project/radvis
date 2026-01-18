@@ -8,8 +8,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,4 +37,6 @@ public class SaveReportCommand {
     @DecimalMin(MIN_LONGITUDE_DEGREES)
     @DecimalMax(MAX_LONGITUDE_DEGREES)
     private BigDecimal longitude;
+
+    List<MultipartFile> files;
 }
