@@ -2,9 +2,7 @@ package de.wps.radvis.backend.mangel.domain.entity;
 
 import de.wps.radvis.backend.common.domain.entity.AbstractEntity;
 import de.wps.radvis.backend.mangel.domain.valueObjects.Issue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,8 +29,16 @@ public class Report extends AbstractEntity {
 
     private LocalDateTime creationDate;
 
+    @OneToMany(
+            mappedBy = "report",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private java.util.List<ReportPhoto> photos = new java.util.ArrayList<>();
+
     @Builder
-    private Report(Long id, Issue issue, String description, Point geometrie) {
+    private Report(Long id, Issue issue, String description, Point geometrie,
+                   java.util.List<ReportPhoto> photos) {
         super(id);
 
         require(geometrie, notNullValue());
@@ -46,5 +52,14 @@ public class Report extends AbstractEntity {
         this.description = description;
         this.geometrie = geometrie;
         this.creationDate = LocalDateTime.now();
+
+        if (photos != null) {
+            photos.forEach(this::addPhoto);
+        }
+    }
+
+    public void addPhoto(ReportPhoto photo) {
+        this.photos.add(photo);
+        photo.assignToReport(this);
     }
 }
