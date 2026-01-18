@@ -23,7 +23,7 @@ public class MangelConfiguration {
     }
 
     @Bean
-    public ReportService reportService(SaveReportCommandConverter converter) {
-        return new ReportService(reportRepository, converter);
+    public ReportService reportService() {
+        return new ReportService(reportRepository, saveReportCommandConverter());
     }
 }
