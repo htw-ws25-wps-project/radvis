@@ -23,6 +23,7 @@ import {
   AbstractInfrastrukturenRoutingService
 } from "../viewer-shared/services/abstract-infrastrukturen-routing.service";
 import {MaengelRoutingService} from "./services/maengel-routing.service";
+import {MatDivider} from "@angular/material/divider";
 
 @NgModule({
   declarations: [
@@ -31,18 +32,19 @@ import {MaengelRoutingService} from "./services/maengel-routing.service";
     MaengelTabelleComponent,
     MaengelEditorComponent,
   ],
-  imports: [
-    CommonModule,
-    ViewerSharedModule,
-    MatTableModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    RouterModule,
-    MatSortModule,
-    MatTooltipModule,
-    MatTabsModule
-  ],
+    imports: [
+        CommonModule,
+        ViewerSharedModule,
+        MatTableModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatButtonModule,
+        RouterModule,
+        MatSortModule,
+        MatTooltipModule,
+        MatTabsModule,
+        MatDivider
+    ],
   exports: [
     MaengelLayerComponent,
     MaengelTabelleComponent,
