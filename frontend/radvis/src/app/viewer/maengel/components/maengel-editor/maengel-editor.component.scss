@@ -1,3 +1,35 @@
-:host {
-  display: block;
+/* Maße für Hauptcontainer der rechten Leiste */
+.detail-container {
+  padding: 16px;
+  width: 350px;
+  min-width: 350px;
+  max-width: 350px;
+  box-sizing: border-box;
+  word-wrap: break-word;
+}
+
+.detail-section {
+  margin-bottom: 24px;
+
+  .detail-row {
+    display: flex;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee; // Optional für bessere Lesbarkeit
+
+    .detail-label {
+      font-weight: bold;
+      width: 150px; // Feste Breite für bündige Optik
+      color: rgba(0, 0, 0, 0.6);
+    }
+
+    .detail-value {
+      flex: 1;
+    }
+  }
+}
+
+.action-section {
+  padding-top: 16px;
+  display: flex;
+  gap: 8px;
 }

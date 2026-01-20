@@ -1,22 +1,36 @@
 <ng-container *ngIf="mangel$ | async as mangel">
   <mat-toolbar>
-    <h2 class="flex-grow">Mangel #{{ mangel.id }}</h2>
+    <h2 class="flex-grow">Mangel (#{{ mangel.id }}) – Details</h2>
     <button mat-icon-button (click)="onClose()">
       <mat-icon>clear</mat-icon>
     </button>
   </mat-toolbar>
 
-  <ul class="hinweis-liste">
-    <li><strong>Issue:</strong> {{ mangel.issue }}</li>
 
-    <li *ngIf="mangel.description">
-      <strong>Beschreibung:</strong> {{ mangel.description }}
-    </li>
+  <div class="detail-container">
+    <section class="detail-section">
+      <div class="detail-row">
+        <span class="detail-label">Issue:</span>
+        <span class="detail-value">{{ mangel.issue }}</span>
+      </div>
 
-    <li>
-      <strong>Standort:</strong>
-      {{ mangel.latitude }}, {{ mangel.longitude }}
-    </li>
+      <div class="detail-row" *ngIf="mangel.description">
+        <span class="detail-label">Beschreibung:</span>
+        <span class="detail-value">{{ mangel.description }}</span>
+      </div>
 
-  </ul>
+      <div class="detail-row">
+        <span class="detail-label">Standort:</span>
+        <span class="detail-value">
+          {{ mangel.latitude }}, {{ mangel.longitude }}
+        </span>
+      </div>
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <section class="action-section">
+    </section>
+  </div>
+
 </ng-container>
