@@ -252,6 +252,7 @@ public class SecurityConfiguration {
 			http.csrf(configurer -> configurer
 				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 				.csrfTokenRequestHandler(delegate)
+                    .ignoringRequestMatchers("/api/**")
 				.ignoringRequestMatchers("/logs/**"));
 
 			return http.build();

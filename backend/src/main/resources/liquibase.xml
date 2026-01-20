@@ -54,5 +54,7 @@
   <include file="liquibase/changelog_36.xml" relativeToChangelogFile="true"/>
   <include file="liquibase/changelog_37.xml" relativeToChangelogFile="true"/>
   <include file="liquibase/changelog_38.xml" relativeToChangelogFile="true"/>
+  <include file="liquibase/changelog_39.xml" relativeToChangelogFile="true"/>
+  <include file="liquibase/changelog_40.xml" relativeToChangelogFile="true"/>
   <include file="liquibase/views.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
