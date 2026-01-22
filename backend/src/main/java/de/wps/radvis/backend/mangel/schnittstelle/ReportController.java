@@ -15,6 +15,10 @@ package de.wps.radvis.backend.mangel.schnittstelle;
 
 import de.wps.radvis.backend.mangel.domain.ReportService;
 import de.wps.radvis.backend.mangel.domain.entity.Report;
+
+
+
+
 import de.wps.radvis.backend.mangel.schnittstelle.view.ReportPhotoView;
 import de.wps.radvis.backend.mangel.schnittstelle.view.ReportView;
 import jakarta.validation.Valid;
@@ -54,6 +58,32 @@ public class ReportController {
 			return ResponseEntity.notFound().build();
 		}
 	}
+
+    @GetMapping("/{reportId}/photos/{photoId}")
+    public ResponseEntity<byte[]> getPhoto(
+            @PathVariable Long reportId,
+            @PathVariable Long photoId) {
+
+        ReportPhotoView photo = reportService.getPhoto(reportId, photoId);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(photo.contentType()))
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "inline; filename=\"" + photo.filename() + "\""
+                )
+                .body(photo.data());
+    }
+
+    @PatchMapping("/reports/{id}/status")
+    public ReportView updateStatus(
+            @PathVariable Long id,
+            @RequestBody @Valid UpdateReportStatusCommand command) {
+
+        return new ReportView(
+                reportService.updateStatus(id, command.getStatus())
+        );
+    }
 
     @GetMapping("/{reportId}/photos/{photoId}")
     public ResponseEntity<byte[]> getPhoto(
