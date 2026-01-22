@@ -15,7 +15,6 @@ package de.wps.radvis.backend.mangel.schnittstelle;
 
 import de.wps.radvis.backend.mangel.domain.ReportService;
 import de.wps.radvis.backend.mangel.domain.entity.Report;
-import de.wps.radvis.backend.mangel.domain.entity.ReportPhoto;
 import de.wps.radvis.backend.mangel.schnittstelle.view.ReportPhotoView;
 import de.wps.radvis.backend.mangel.schnittstelle.view.ReportView;
 import jakarta.validation.Valid;
