@@ -15,6 +15,7 @@ package de.wps.radvis.backend.mangel.domain;
 
 import de.wps.radvis.backend.mangel.domain.entity.Report;
 import de.wps.radvis.backend.mangel.domain.entity.ReportPhoto;
+import de.wps.radvis.backend.mangel.domain.valueObjects.ReportStatus;
 import de.wps.radvis.backend.mangel.schnittstelle.SaveReportCommand;
 import de.wps.radvis.backend.mangel.schnittstelle.SaveReportCommandConverter;
 import de.wps.radvis.backend.mangel.schnittstelle.view.ReportPhotoView;
@@ -61,4 +62,12 @@ public class ReportService {
                 photo.getFilename()
         );
     }
+    public Report updateStatus(Long reportId, ReportStatus status) {
+        Report report = reportRepository.findById(reportId)
+                .orElseThrow();
+
+        report.setStatus(status);
+        return reportRepository.save(report);
+    }
+
 }

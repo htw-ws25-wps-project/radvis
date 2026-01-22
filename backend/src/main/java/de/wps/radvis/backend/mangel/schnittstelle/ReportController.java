@@ -74,5 +74,16 @@ public class ReportController {
                 )
                 .body(photo.data());
     }
+
+    @PatchMapping("/reports/{id}/status")
+    public ReportView updateStatus(
+            @PathVariable Long id,
+            @RequestBody @Valid UpdateReportStatusCommand command) {
+
+        return new ReportView(
+                reportService.updateStatus(id, command.getStatus())
+        );
+    }
+
 }
 

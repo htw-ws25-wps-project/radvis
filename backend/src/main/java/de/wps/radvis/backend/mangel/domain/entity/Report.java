@@ -17,10 +17,7 @@ import de.wps.radvis.backend.common.domain.entity.AbstractEntity;
 import de.wps.radvis.backend.mangel.domain.valueObjects.Issue;
 import de.wps.radvis.backend.mangel.domain.valueObjects.ReportStatus;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.locationtech.jts.geom.Point;
 
 import java.time.LocalDateTime;
@@ -43,6 +40,7 @@ public class Report extends AbstractEntity {
 
 	private LocalDateTime creationDate;
 
+    @Setter
     @Enumerated(EnumType.STRING)
     private ReportStatus status;
 
@@ -79,5 +77,6 @@ public class Report extends AbstractEntity {
 	public void addPhoto(ReportPhoto photo) {
 		this.photos.add(photo);
 		photo.assignToReport(this);
-	}
+    }
+
 }
