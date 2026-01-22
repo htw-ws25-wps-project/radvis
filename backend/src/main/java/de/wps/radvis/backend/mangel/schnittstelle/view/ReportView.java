@@ -26,6 +26,7 @@ public record ReportView(
         double longitude,
         double latitude,
         LocalDateTime created,
+        String status,
         List<String> photoUrls
 ) {
     public ReportView(Report report) {
@@ -36,7 +37,8 @@ public record ReportView(
                 report.getGeometrie().getX(),
                 report.getGeometrie().getY(),
                 report.getCreationDate(),
-                report.getPhotos().stream()
+                report.getStatus().name(),
+        report.getPhotos().stream()
                         .map(photo ->
                                 "/api/reports/" + report.getId() + "/photos/" + photo.getId()
                         )
