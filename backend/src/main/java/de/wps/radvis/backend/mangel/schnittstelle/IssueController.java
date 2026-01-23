@@ -1,5 +1,18 @@
-package de.wps.radvis.backend.mangel.schnittstelle;
+/*
+ * Copyright (c) 2023 WPS - Workplace Solutions GmbH
+ *
+ * Licensed under the EUPL, Version 1.2 or as soon they will be approved by the European Commission - subsequent versions of the EUPL (the "Licence");
+ *
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ *
+ * https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the Licence is distributed on an "AS IS" basis, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and limitations under the Licence.
+ */
 
+package de.wps.radvis.backend.mangel.schnittstelle;
 
 import de.wps.radvis.backend.mangel.domain.valueObjects.Issue;
 import de.wps.radvis.backend.mangel.schnittstelle.view.IssueLabelView;
@@ -14,15 +27,15 @@ import java.util.List;
 @RequestMapping("/api")
 public class IssueController {
 
-    @GetMapping("/issues")
-    public List<Issue> getIssues() {
-        return List.of(Issue.values());
-    }
+	@GetMapping("/issues")
+	public List<Issue> getIssues() {
+		return List.of(Issue.values());
+	}
 
-    @GetMapping("/issue-labels")
-    public List<IssueLabelView> getIssueLabels() {
-        return Arrays.stream(Issue.values())
-                .map(issue -> new IssueLabelView(issue.name(), issue.getLabel()))
-                .toList();
-    }
+	@GetMapping("/issue-labels")
+	public List<IssueLabelView> getIssueLabels() {
+		return Arrays.stream(Issue.values())
+			.map(issue -> new IssueLabelView(issue.name(), issue.getLabel()))
+			.toList();
+	}
 }

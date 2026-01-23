@@ -13,8 +13,13 @@
  */
 package de.wps.radvis.backend.mangel.domain;
 
-import de.wps.radvis.backend.mangel.domain.entity.Report;
-import org.springframework.data.repository.ListCrudRepository;
+import de.wps.radvis.backend.mangel.domain.entity.ReportPhoto;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ReportRepository extends ListCrudRepository<Report, Long> {
+import java.util.Optional;
+
+
+public interface ReportPhotoRepository extends JpaRepository<ReportPhoto, Long> {
+
+    Optional<ReportPhoto> findByIdAndReportId(Long id, Long reportId);
 }
