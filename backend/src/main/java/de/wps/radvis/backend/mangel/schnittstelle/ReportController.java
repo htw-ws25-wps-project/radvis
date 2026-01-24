@@ -85,5 +85,20 @@ public class ReportController {
         );
     }
 
+    @GetMapping("/{reportId}/photos/{photoId}")
+    public ResponseEntity<byte[]> getPhoto(
+            @PathVariable Long reportId,
+            @PathVariable Long photoId) {
+
+        ReportPhotoView photo = reportService.getPhoto(reportId, photoId);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(photo.contentType()))
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "inline; filename=\"" + photo.filename() + "\""
+                )
+                .body(photo.data());
+    }
 }
 
