@@ -25,11 +25,17 @@
           {{ mangel.latitude }}, {{ mangel.longitude }}
         </span>
       </div>
+    </section>
 
-      <div class="detail-row">
-        <span class="detail-label">Status:</span>
+    <section class="status-card">
+      <div class="status-card-header">
+        <mat-icon>edit_note</mat-icon>
+        <h3>Status bearbeiten</h3>
+      </div>
+
+      <div class="status-control">
         <select
-          class="status-select"
+          class="status-select-action"
           [value]="mangel.status"
           (change)="onStatusChange(select.value, mangel.id)"
           #select
@@ -42,8 +48,6 @@
     </section>
 
     <mat-divider></mat-divider>
-
-
 
     <section class="photo-section" *ngIf="mangel.photoUrls.length">
       <h3>Fotos</h3>
