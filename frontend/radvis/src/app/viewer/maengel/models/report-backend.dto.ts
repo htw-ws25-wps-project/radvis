@@ -4,5 +4,6 @@ export interface ReportBackendDTO {
   description?: string;
   latitude: number;
   longitude: number;
+  status: string;
   photoUrls: string[];
 }
