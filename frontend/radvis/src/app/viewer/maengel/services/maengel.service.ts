@@ -22,4 +22,14 @@ export class MaengelService {
   getById(id: number): Observable<ReportBackendDTO> {
     return this.http.get<ReportBackendDTO>(`/api/reports/${id}`);
   }
+
+  updateStatus(id: number, command: { status: string }): Observable<void> {
+    return this.http.patch<void>(
+      `/api/reports/${id}/status`,
+      command
+    );
+  }
+
+
+
 }

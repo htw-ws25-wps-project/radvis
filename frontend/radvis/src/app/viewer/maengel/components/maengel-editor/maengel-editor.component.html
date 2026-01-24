@@ -25,6 +25,20 @@
           {{ mangel.latitude }}, {{ mangel.longitude }}
         </span>
       </div>
+
+      <div class="detail-row">
+        <span class="detail-label">Status:</span>
+        <select
+          class="status-select"
+          [value]="mangel.status"
+          (change)="onStatusChange(select.value, mangel.id)"
+          #select
+        >
+          <option *ngFor="let status of reportStatuses" [value]="status">
+            {{ status }}
+          </option>
+        </select>
+      </div>
     </section>
 
     <mat-divider></mat-divider>

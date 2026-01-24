@@ -57,4 +57,10 @@ export class MaengelFilterService
         return EMPTY;
     }
   }
+
+  public reload(): void {
+    console.log('MaengelFilterService.reload()');
+    this.init();
+  }
+
 }
