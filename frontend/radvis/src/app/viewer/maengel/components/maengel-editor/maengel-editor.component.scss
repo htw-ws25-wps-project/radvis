@@ -127,18 +127,15 @@
 }
 
 .photo-grid {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
 }
 
 .photo-img {
-  width: auto;
-  max-width: 180px;
-  height: auto;
-
-  display: block;
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   transition: transform 0.2s ease-in-out;
@@ -148,10 +145,4 @@
 .photo-img:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-
-.action-section {
-  padding-top: 16px;
-  display: flex;
-  gap: 8px;
 }
