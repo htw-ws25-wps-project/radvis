@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import Feature, { FeatureLike } from 'ol/Feature';
-import { Geometry, Point } from 'ol/geom';
+import {Point } from 'ol/geom';
 import VectorLayer from 'ol/layer/Vector';
 import { Style } from 'ol/style';
 
@@ -16,7 +16,7 @@ import { MAENGEL } from '../../models/maengel.infrastruktur';
 import { MaengelRoutingService } from '../../services/maengel-routing.service';
 import { MaengelFilterService } from '../../services/maengel-filter.service';
 import { MaengelListenView } from '../../models/maengel-listen-view';
-import {fromLonLat, transform} from 'ol/proj';
+import { transform} from 'ol/proj';
 
 
 @Component({
