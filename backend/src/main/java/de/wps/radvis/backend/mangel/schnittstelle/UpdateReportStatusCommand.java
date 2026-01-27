@@ -1,8 +1,3 @@
-package de.wps.radvis.backend.mangel.schnittstelle;
-
-import de.wps.radvis.backend.mangel.domain.valueObjects.ReportStatus;
-import jakarta.validation.constraints.NotNull;
-
 /*
  * Copyright (c) 2023 WPS - Workplace Solutions GmbH
  *
@@ -16,16 +11,18 @@ import jakarta.validation.constraints.NotNull;
  * Unless required by applicable law or agreed to in writing, software distributed under the Licence is distributed on an "AS IS" basis, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Licence for the specific language governing permissions and limitations under the Licence.
  */
+package de.wps.radvis.backend.mangel.schnittstelle;
+
+import de.wps.radvis.backend.mangel.domain.valueObjects.ReportStatus;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class UpdateReportStatusCommand {
 
-    @NotNull
-    private ReportStatus status;
+	@NotNull
+	private ReportStatus status;
 
-    public ReportStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(ReportStatus status) {
-        this.status = status;
-    }
 }

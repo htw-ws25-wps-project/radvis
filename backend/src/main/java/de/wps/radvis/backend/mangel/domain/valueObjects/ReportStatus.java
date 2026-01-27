@@ -1,5 +1,3 @@
-package de.wps.radvis.backend.mangel.domain.valueObjects;
-
 /*
  * Copyright (c) 2023 WPS - Workplace Solutions GmbH
  *
@@ -13,8 +11,10 @@ package de.wps.radvis.backend.mangel.domain.valueObjects;
  * Unless required by applicable law or agreed to in writing, software distributed under the Licence is distributed on an "AS IS" basis, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Licence for the specific language governing permissions and limitations under the Licence.
  */
+package de.wps.radvis.backend.mangel.domain.valueObjects;
+
 public enum ReportStatus {
-    OFFEN,
-    IN_BEARBEITUNG,
-    ERLEDIGT
+	OFFEN,
+	IN_BEARBEITUNG,
+	ERLEDIGT
 }

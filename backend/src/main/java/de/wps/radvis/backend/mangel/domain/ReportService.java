@@ -25,14 +25,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
 @Transactional
 @RequiredArgsConstructor
 public class ReportService {
 
 	private final ReportRepository reportRepository;
 	private final SaveReportCommandConverter converter;
-    private final ReportPhotoRepository reportPhotoRepository;
+	private final ReportPhotoRepository reportPhotoRepository;
 
 	public Report create(SaveReportCommand command) {
 		Report report = converter.toReport(command);
@@ -51,23 +50,24 @@ public class ReportService {
 			.toList();
 	}
 
-    public ReportPhotoView getPhoto(Long reportId, Long photoId) {
-        ReportPhoto photo = reportPhotoRepository
-                .findByIdAndReportId(photoId, reportId)
-                .orElseThrow();
+	public ReportPhotoView getPhoto(Long reportId, Long photoId) {
+		ReportPhoto photo = reportPhotoRepository
+			.findByIdAndReportId(photoId, reportId)
+			.orElseThrow();
 
-        return new ReportPhotoView(
-                photo.getData(),
-                photo.getContentType(),
-                photo.getFilename()
-        );
-    }
-    public Report updateStatus(Long reportId, ReportStatus status) {
-        Report report = reportRepository.findById(reportId)
-                .orElseThrow();
+		return new ReportPhotoView(
+			photo.getData(),
+			photo.getContentType(),
+			photo.getFilename()
+		);
+	}
 
-        report.setStatus(status);
-        return reportRepository.save(report);
-    }
+	public Report updateStatus(Long reportId, ReportStatus status) {
+		Report report = reportRepository.findById(reportId)
+			.orElseThrow();
+
+		report.setStatus(status);
+		return reportRepository.save(report);
+	}
 
 }

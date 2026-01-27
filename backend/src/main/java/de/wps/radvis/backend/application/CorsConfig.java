@@ -1,5 +1,3 @@
-package de.wps.radvis.backend.application;
-
 /*
  * Copyright (c) 2023 WPS - Workplace Solutions GmbH
  *
@@ -13,6 +11,7 @@ package de.wps.radvis.backend.application;
  * Unless required by applicable law or agreed to in writing, software distributed under the Licence is distributed on an "AS IS" basis, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Licence for the specific language governing permissions and limitations under the Licence.
  */
+package de.wps.radvis.backend.application;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,24 +22,23 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 public class CorsConfig {
 
-    @Bean
-    public CorsFilter corsFilter() {
-        CorsConfiguration config = new CorsConfiguration();
+	@Bean
+	public CorsFilter corsFilter() {
+		CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowCredentials(true);
+		config.setAllowCredentials(true);
 
-        // Tu frontend
-        config.addAllowedOrigin("http://localhost:4200");
+		// Tu frontend
+		config.addAllowedOrigin("http://localhost:4200");
 
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
+		config.addAllowedHeader("*");
+		config.addAllowedMethod("*");
 
-        UrlBasedCorsConfigurationSource source =
-                new UrlBasedCorsConfigurationSource();
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
-        // SOLO para la API
-        source.registerCorsConfiguration("/api/**", config);
+		// SOLO para la API
+		source.registerCorsConfiguration("/api/**", config);
 
-        return new CorsFilter(source);
-    }
+		return new CorsFilter(source);
+	}
 }
