@@ -40,12 +40,11 @@ public class Report extends AbstractEntity {
 
 	private LocalDateTime creationDate;
 
-    @Setter
-    @Enumerated(EnumType.STRING)
-    private ReportStatus status;
+	@Setter
+	@Enumerated(EnumType.STRING)
+	private ReportStatus status;
 
-
-    @OneToMany(
+	@OneToMany(
 		mappedBy = "report", cascade = CascadeType.ALL, orphanRemoval = true
 	)
 	private java.util.List<ReportPhoto> photos = new java.util.ArrayList<>();
@@ -66,10 +65,9 @@ public class Report extends AbstractEntity {
 		this.description = description;
 		this.geometrie = geometrie;
 		this.creationDate = LocalDateTime.now();
-        this.status = ReportStatus.OFFEN;
+		this.status = ReportStatus.OFFEN;
 
-
-        if (photos != null) {
+		if (photos != null) {
 			photos.forEach(this::addPhoto);
 		}
 	}
@@ -77,6 +75,6 @@ public class Report extends AbstractEntity {
 	public void addPhoto(ReportPhoto photo) {
 		this.photos.add(photo);
 		photo.assignToReport(this);
-    }
+	}
 
 }

@@ -18,8 +18,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-
 public interface ReportPhotoRepository extends JpaRepository<ReportPhoto, Long> {
 
-    Optional<ReportPhoto> findByIdAndReportId(Long id, Long reportId);
+	Optional<ReportPhoto> findByIdAndReportId(Long id, Long reportId);
 }
