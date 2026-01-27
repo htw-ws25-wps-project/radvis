@@ -9,6 +9,7 @@ export function mapReportToMaengelList(
     id: report.id,
     issue: report.issue,
     beschreibung: report.description,
+    status: report.status,
     geometrie: {
       type: 'Point',
       coordinates: [report.longitude, report.latitude],

@@ -6,4 +6,5 @@ export interface MaengelListenView {
   geometrie: PointGeojson;
   issue: string;
   beschreibung?: string;
+  status: string;
 }

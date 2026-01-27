@@ -36,6 +36,7 @@ export class MaengelTabelleComponent {
   spaltenDefinition: SpaltenDefinition[] = [
     {name: 'issue', displayName: 'Issue'},
     {name: 'beschreibung', displayName: 'Beschreibung'},
+    {name: 'status', displayName:'Status'}
   ];
 
   /** Gefilterte Spalten */

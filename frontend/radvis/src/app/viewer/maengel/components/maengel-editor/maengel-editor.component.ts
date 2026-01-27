@@ -5,6 +5,8 @@ import { ViewerRoutingService } from 'src/app/viewer/viewer-shared/services/view
 import { DiscardableComponent } from 'src/app/shared/services/discard.guard';
 import {map} from "rxjs/operators";
 import {ReportBackendDTO} from "../../models/report-backend.dto";
+import { MaengelService } from '../../services/maengel.service';
+import {MaengelFilterService} from "../../services/maengel-filter.service";
 
 @Component({
   selector: 'rad-maengel-editor',
@@ -18,9 +20,13 @@ export class MaengelEditorComponent implements DiscardableComponent {
 
   private forceClose = false;
 
+  reportStatuses = ['OFFEN', 'IN_BEARBEITUNG', 'ERLEDIGT'];
+
   constructor(
     private route: ActivatedRoute,
-    private viewerRoutingService: ViewerRoutingService
+    private viewerRoutingService: ViewerRoutingService,
+    private mangelService: MaengelService,
+    private maengelFilterService: MaengelFilterService
   ) {
     this.mangel$ = this.route.data.pipe(
       map(data => data['maengel'] as ReportBackendDTO)
@@ -41,5 +47,20 @@ export class MaengelEditorComponent implements DiscardableComponent {
 
   canDiscard = (): boolean => {
     return this.forceClose;
-  };
+  }
+
+
+  onStatusChange(status: string, id: number): void {
+    this.mangelService.updateStatus(id, { status }).subscribe({
+      next: () => {
+        console.log('Status gespeichert');
+        this.maengelFilterService.reload();
+      },
+      error: (err) => {
+        console.error(' PATCH Fehler', err);
+        alert('Status konnte nicht gespeichert werden!');
+      }
+    });
+  }
 }
+
