@@ -29,6 +29,22 @@
 
     <mat-divider></mat-divider>
 
+
+
+    <section class="photo-section" *ngIf="mangel.photoUrls.length">
+      <h3>Fotos</h3>
+
+      <div class="photo-grid">
+        <img
+          *ngFor="let url of mangel.photoUrls"
+          [src]="url"
+          alt="Foto zum Mangel"
+          class="photo-img"
+        />
+      </div>
+    </section>
+
+
     <section class="action-section">
     </section>
   </div>
