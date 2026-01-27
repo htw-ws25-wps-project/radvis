@@ -16,6 +16,8 @@ import { MAENGEL } from '../../models/maengel.infrastruktur';
 import { MaengelRoutingService } from '../../services/maengel-routing.service';
 import { MaengelFilterService } from '../../services/maengel-filter.service';
 import { MaengelListenView } from '../../models/maengel-listen-view';
+import {fromLonLat, transform} from 'ol/proj';
+
 
 @Component({
   selector: 'rad-maengel-layer',
@@ -45,6 +47,7 @@ export class MaengelLayerComponent
 
     this.olMapService.addLayer(this.olLayer);
     this.initServiceSubscriptions();
+
   }
 
   ngOnDestroy(): void {
@@ -52,13 +55,14 @@ export class MaengelLayerComponent
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
+  protected convertToFeature(infrastruktur: MaengelListenView): Feature<Point>[] {
+    const [lon, lat] = infrastruktur.geometrie.coordinates;
 
-  protected convertToFeature(infrastruktur: MaengelListenView): Feature<Geometry>[] {
-    const feature = new Feature(new Point(infrastruktur.geometrie.coordinates));
+    // prueba 25832 primero
+    const xy = transform([lon, lat], 'EPSG:4326', 'EPSG:25832');
 
-
+    const feature = new Feature(new Point(xy));
     feature.setId(infrastruktur.id);
-
     return [feature];
   }
 
