@@ -16,5 +16,18 @@ package de.wps.radvis.backend.mangel.domain;
 import de.wps.radvis.backend.mangel.domain.entity.Report;
 import org.springframework.data.repository.ListCrudRepository;
 
+/**
+ * Repository für {@link Report}-Entitäten.
+ * <p>
+ * Stellt die Standard-CRUD-Operationen (Erstellen, Lesen, Aktualisieren, Löschen) für Meldungen bereit.
+ * Durch {@link ListCrudRepository} liefern Abfragen, die mehrere Datensätze zurückgeben, typischerweise
+ * {@link java.util.List Listen} (z. B. bei {@code findAll()}).
+ * </p>
+ *
+ * <p>
+ * Erweiterungen (z. B. domänenspezifische Finder-Methoden) können durch zusätzliche Methodensignaturen
+ * in diesem Interface ergänzt werden.
+ * </p>
+ */
 public interface ReportRepository extends ListCrudRepository<Report, Long> {
 }
