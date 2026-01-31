@@ -13,8 +13,29 @@
  */
 package de.wps.radvis.backend.mangel.domain.valueObjects;
 
+/**
+ * Status einer Mangelmeldung ({@code Report}) im Bearbeitungsprozess.
+ * <p>
+ * Der Status beschreibt den aktuellen Stand der Bearbeitung (offen, in Arbeit, erledigt).
+ * </p>
+ *
+ * <h2>Hinweis zur Persistenz/Serialisierung</h2>
+ * Wird dieser Enum als String (z. B. via {@code EnumType.STRING} in JPA oder als JSON-String) gespeichert/übertragen,
+ * sollten Enum-Konstanten nicht umbenannt werden, da dies Abwärtskompatibilität und bestehende Daten brechen kann.
+ */
 public enum ReportStatus {
-	OFFEN,
-	IN_BEARBEITUNG,
-	ERLEDIGT
+    /**
+     * Die Meldung ist neu bzw. noch nicht in Bearbeitung genommen.
+     */
+    OFFEN,
+
+    /**
+     * Die Meldung wird aktuell geprüft oder bearbeitet.
+     */
+    IN_BEARBEITUNG,
+
+    /**
+     * Die Meldung ist abschließend bearbeitet; es sind keine weiteren Schritte vorgesehen.
+     */
+    ERLEDIGT
 }

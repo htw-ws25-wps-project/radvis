@@ -27,17 +27,40 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(basePackageClasses = ReportRepository.class)
 @EntityScan(basePackages = "de.wps.radvis.backend.mangel.domain.entity")
 @RequiredArgsConstructor
+/**
+ * Spring-Konfiguration für das Modul "Mangel".
+ * <p>
+ * Verantwortlichkeiten:
+ * </p>
+ * <ul>
+ *   <li>Aktiviert Spring-Data-JPA-Repositories des Moduls (ausgehend von {@link ReportRepository}).</li>
+ *   <li>Konfiguriert das Entity-Scanning für die Domänen-Entitäten des Moduls.</li>
+ *   <li>Registriert modul-spezifische Beans (z. B. Converter, Services).</li>
+ * </ul>
+ */
 public class MangelConfiguration {
 
-	private final ReportRepository reportRepository;
+    private final ReportRepository reportRepository;
 
-	@Bean
-	public SaveReportCommandConverter saveReportCommandConverter() {
-		return new SaveReportCommandConverter();
-	}
+    /**
+     * Bean für die Konvertierung von {@link de.wps.radvis.backend.mangel.schnittstelle.SaveReportCommand}
+     * in eine {@link de.wps.radvis.backend.mangel.domain.entity.Report}-Entität.
+     *
+     * @return {@link SaveReportCommandConverter}
+     */
+    @Bean
+    public SaveReportCommandConverter saveReportCommandConverter() {
+        return new SaveReportCommandConverter();
+    }
 
-	@Bean
-	public ReportService reportService(ReportPhotoRepository reportPhotoRepository) {
-		return new ReportService(reportRepository, saveReportCommandConverter(), reportPhotoRepository);
-	}
+    /**
+     * Bean für den {@link ReportService}.
+     *
+     * @param reportPhotoRepository Repository für den Zugriff auf {@code ReportPhoto}-Entitäten
+     * @return {@link ReportService}
+     */
+    @Bean
+    public ReportService reportService(ReportPhotoRepository reportPhotoRepository) {
+        return new ReportService(reportRepository, saveReportCommandConverter(), reportPhotoRepository);
+    }
 }

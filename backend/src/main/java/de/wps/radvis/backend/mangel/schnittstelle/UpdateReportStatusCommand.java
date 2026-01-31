@@ -20,9 +20,19 @@ import lombok.Setter;
 
 @Setter
 @Getter
+/**
+ * Command/DTO zum Aktualisieren des Status einer Mangelmeldung.
+ * <p>
+ * Wird typischerweise als JSON-Request-Body an den Status-Endpunkt übergeben
+ * (z. B. {@code PATCH /api/reports/{id}/status}).
+ * </p>
+ */
 public class UpdateReportStatusCommand {
 
-	@NotNull
-	private ReportStatus status;
+    /**
+     * Neuer Status der Meldung.
+     */
+    @NotNull
+    private ReportStatus status;
 
 }

@@ -13,7 +13,17 @@
  */
 package de.wps.radvis.backend.mangel.schnittstelle.view;
 
-
+/**
+ * View/DTO zur Ausgabe eines einzelnen Fotos einer Mangelmeldung.
+ * <p>
+ * Enthält die Bilddaten sowie die wichtigsten Metadaten, um das Bild korrekt ausliefern und
+ * im Client darstellen zu können (z. B. Content-Type und Dateiname).
+ * </p>
+ *
+ * @param data Binärdaten des Bildes
+ * @param contentType MIME-Type des Bildes (z. B. {@code image/jpeg} oder {@code image/png})
+ * @param filename optionaler Dateiname (z. B. ursprünglicher Upload-Name)
+ */
 public record ReportPhotoView(
         byte[] data,
         String contentType,
