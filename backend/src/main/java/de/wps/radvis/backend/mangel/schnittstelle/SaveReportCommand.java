@@ -31,27 +31,64 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+/**
+ * Command/DTO zum Erstellen einer neuen Mangelmeldung über die Schnittstelle.
+ * <p>
+ * Dieses Objekt wird typischerweise per {@code multipart/form-data} an den
+ * {@code POST /api/reports}-Endpunkt übergeben. Neben den Meldungsdaten können optional
+ * Bilddateien ({@link MultipartFile}) mitgesendet werden.
+ * </p>
+ *
+ * <h2>Validierung</h2>
+ * <ul>
+ *   <li>{@link #description} ist optional, aber auf {@value #MAX_DESCRIPTION_LENGTH} Zeichen begrenzt.</li>
+ *   <li>{@link #latitude} muss gesetzt sein und im Bereich [-90; 90] liegen.</li>
+ *   <li>{@link #longitude} muss gesetzt sein und im Bereich [-180; 180] liegen.</li>
+ * </ul>
+ *
+ * <p>
+ * Hinweis: Die Validierung der Dateigrößen erfolgt nicht hier, sondern in der Konvertierung
+ * (z. B. im {@code SaveReportCommandConverter}).
+ * </p>
+ */
 public class SaveReportCommand {
-	private static final int MAX_DESCRIPTION_LENGTH = 1000;
-	private static final String MIN_LATITUDE_DEGREES = "-90.0";
-	private static final String MAX_LATITUDE_DEGREES = "90.0";
-	private static final String MIN_LONGITUDE_DEGREES = "-180.0";
-	private static final String MAX_LONGITUDE_DEGREES = "180.0";
+    private static final int MAX_DESCRIPTION_LENGTH = 1000;
+    private static final String MIN_LATITUDE_DEGREES = "-90.0";
+    private static final String MAX_LATITUDE_DEGREES = "90.0";
+    private static final String MIN_LONGITUDE_DEGREES = "-180.0";
+    private static final String MAX_LONGITUDE_DEGREES = "180.0";
 
-	private Issue issue;
+    /**
+     * Optionale Kategorie der Meldung.
+     * Falls nicht gesetzt, kann in der Domäne ein Standardwert verwendet werden
+     * (z. B. {@code KEINE_KATEGORIE}).
+     */
+    private Issue issue;
 
-	@Length(max = MAX_DESCRIPTION_LENGTH)
-	private String description;
+    /**
+     * Optionale Beschreibung des Mangels (Freitext).
+     */
+    @Length(max = MAX_DESCRIPTION_LENGTH)
+    private String description;
 
-	@NotNull
-	@DecimalMin(MIN_LATITUDE_DEGREES)
-	@DecimalMax(MAX_LATITUDE_DEGREES)
-	private BigDecimal latitude;
+    /**
+     * Breitengrad in Dezimalgrad.
+     */
+    @NotNull
+    @DecimalMin(MIN_LATITUDE_DEGREES)
+    @DecimalMax(MAX_LATITUDE_DEGREES)
+    private BigDecimal latitude;
 
-	@NotNull
-	@DecimalMin(MIN_LONGITUDE_DEGREES)
-	@DecimalMax(MAX_LONGITUDE_DEGREES)
-	private BigDecimal longitude;
+    /**
+     * Längengrad in Dezimalgrad.
+     */
+    @NotNull
+    @DecimalMin(MIN_LONGITUDE_DEGREES)
+    @DecimalMax(MAX_LONGITUDE_DEGREES)
+    private BigDecimal longitude;
 
-	List<MultipartFile> files;
+    /**
+     * Optionale Liste von Bilddateien, die der Meldung zugeordnet werden sollen.
+     */
+    List<MultipartFile> files;
 }

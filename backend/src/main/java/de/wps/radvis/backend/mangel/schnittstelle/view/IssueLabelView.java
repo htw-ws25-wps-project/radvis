@@ -13,5 +13,16 @@
  */
 package de.wps.radvis.backend.mangel.schnittstelle.view;
 
+/**
+ * View/DTO zur Ausgabe einer {@code Issue}-Kategorie als Schlüssel-Label-Paar.
+ * <p>
+ * Wird typischerweise verwendet, um dem Frontend eine Liste aller Kategorien mit
+ * technischem Schlüssel ({@link #key()}) und menschenlesbarer Bezeichnung ({@link #label()})
+ * bereitzustellen (z. B. für Dropdowns).
+ * </p>
+ *
+ * @param key technischer Schlüssel (i. d. R. der Enum-Name, z. B. {@code SCHLAGLOCH})
+ * @param label Anzeige-Text für Nutzer (z. B. {@code "Schlagloch"})
+ */
 public record IssueLabelView(String key, String label) {
 }
