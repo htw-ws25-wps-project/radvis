@@ -45,7 +45,12 @@ import java.util.List;
  * {@link HttpStatus#PAYLOAD_TOO_LARGE} geworfen.
  */
 public class SaveReportCommandConverter {
-	private static final GeometryFactory GEOMETRY_FACTORY = new GeometryFactory();
+    private static final GeometryFactory GEOMETRY_FACTORY = new GeometryFactory();
+
+    /**
+     * Maximale Größe einer einzelnen Datei in Bytes (10 MB).
+     */
+    private static final long MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
 
 	/**
 	 * Maximale Größe einer einzelnen Datei in Bytes (10 MB).
@@ -69,22 +74,22 @@ public class SaveReportCommandConverter {
 	public Report toReport(SaveReportCommand command) {
 		validateFileSizes(command.getFiles());
 
-		Point geometrie = toPoint(command.getLatitude(), command.getLongitude());
+        Point geometrie = toPoint(command.getLatitude(), command.getLongitude());
 
-		Report report = Report.builder()
-			.issue(command.getIssue())
-			.description(command.getDescription())
-			.geometrie(geometrie)
-			.build();
+        Report report = Report.builder()
+                .issue(command.getIssue())
+                .description(command.getDescription())
+                .geometrie(geometrie)
+                .build();
 
-		if (command.getFiles() != null) {
-			command.getFiles().stream()
-				.map(this::mapToEntity)
-				.forEach(report::addPhoto);
-		}
+        if (command.getFiles() != null) {
+            command.getFiles().stream()
+                    .map(this::mapToEntity)
+                    .forEach(report::addPhoto);
+        }
 
-		return report;
-	}
+        return report;
+    }
 
 	/**
 	 * Erstellt aus Latitude/Longitude einen {@link Point}.
@@ -114,20 +119,20 @@ public class SaveReportCommandConverter {
 		if (files == null || files.isEmpty())
 			return;
 
-		long totalSize = 0;
-		for (MultipartFile file : files) {
-			if (file.getSize() > MAX_FILE_SIZE) {
-				throw new ResponseStatusException(HttpStatus.PAYLOAD_TOO_LARGE,
-					"Die Datei " + file.getOriginalFilename() + " überschreitet 10 MB.");
-			}
-			totalSize += file.getSize();
-		}
+        long totalSize = 0;
+        for (MultipartFile file : files) {
+            if (file.getSize() > MAX_FILE_SIZE) {
+                throw new ResponseStatusException(HttpStatus.PAYLOAD_TOO_LARGE,
+                        "Die Datei " + file.getOriginalFilename() + " überschreitet 10 MB.");
+            }
+            totalSize += file.getSize();
+        }
 
-		if (totalSize > MAX_TOTAL_SIZE) {
-			throw new ResponseStatusException(HttpStatus.PAYLOAD_TOO_LARGE,
-				"Gesamtgröße der Bilder überschreitet 30 MB.");
-		}
-	}
+        if (totalSize > MAX_TOTAL_SIZE) {
+            throw new ResponseStatusException(HttpStatus.PAYLOAD_TOO_LARGE,
+                    "Gesamtgröße der Bilder überschreitet 30 MB.");
+        }
+    }
 
 	/**
 	 * Mappt eine hochgeladene Datei auf eine {@link ReportPhoto}-Entität.

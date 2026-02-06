@@ -40,7 +40,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  */
 public class MangelConfiguration {
 
-	private final ReportRepository reportRepository;
+    private final ReportRepository reportRepository;
 
 	/**
 	 * Bean für die Konvertierung von {@link de.wps.radvis.backend.mangel.schnittstelle.SaveReportCommand}

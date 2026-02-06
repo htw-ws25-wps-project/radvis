@@ -39,7 +39,7 @@ import java.util.List;
  */
 public class ReportController {
 
-	private final ReportService reportService;
+    private final ReportService reportService;
 
 	/**
 	 * Erstellt eine neue Mangelmeldung.
@@ -99,16 +99,16 @@ public class ReportController {
 		@PathVariable Long reportId,
 		@PathVariable Long photoId) {
 
-		ReportPhotoView photo = reportService.getPhoto(reportId, photoId);
+        ReportPhotoView photo = reportService.getPhoto(reportId, photoId);
 
-		return ResponseEntity.ok()
-			.contentType(MediaType.parseMediaType(photo.contentType()))
-			.header(
-				HttpHeaders.CONTENT_DISPOSITION,
-				"inline; filename=\"" + photo.filename() + "\""
-			)
-			.body(photo.data());
-	}
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(photo.contentType()))
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "inline; filename=\"" + photo.filename() + "\""
+                )
+                .body(photo.data());
+    }
 
 	/**
 	 * Aktualisiert den Status einer Mangelmeldung.
@@ -125,7 +125,7 @@ public class ReportController {
 		@PathVariable Long id,
 		@RequestBody @Valid UpdateReportStatusCommand command) {
 
-		reportService.updateStatus(id, command.getStatus());
-	}
+        reportService.updateStatus(id, command.getStatus());
+    }
 
 }
