@@ -143,11 +143,11 @@ Das Interface ist unter http://localhost:4200 erreichbar.
 
 Bei Interesse an einer Demonstration des Systems wenden Sie sich bitte an [vertrieb@wps.de](mailto:vertrieb@wps.de).
 
-### Ausführung der Dokumentation von RadVIS- Maengelmelder
-# Backend-Entwicklung
+## Ausführung der Dokumentation von RadVIS- Maengelmelder
+### Backend-Entwicklung
 Das Backend enthält die Geschäftslogik und Datenverarbeitung der Anwendung des Mangelmelders.
 
-## API-Schnittstellen (Swagger)
+### API-Schnittstellen (Swagger)
 Für das schnelle Testen der Endpunkte nutzen wir Swagger. Hier kannst du Requests direkt absenden, ohne ein Frontend zu bedienen.
 
 Swagger UI: http://localhost:8080/swagger-ui/index.html
@@ -156,7 +156,7 @@ Swagger UI: http://localhost:8080/swagger-ui/index.html
 
 Nutzen: Dokumentation der REST-Endpunkte.
 
-## Technische Dokumentation (Javadoc)
+### Technische Dokumentation (Javadoc)
 Die interne Logik, insbesondere unsere Erweiterungen im mangel-Modul und die Struktur der Entities (Report, Issue), ist über Javadoc dokumentiert.
 
 So generierst du die technische Doku: Da wir Lombok und Checkstyle nutzen, verwende diesen Befehl im backend-Ordner, um Fehler durch generierten Code zu überspringen:
@@ -174,11 +174,11 @@ Um den Server lokal zu starten:
 cd backend
 ./mvnw spring-boot:run
 ```
-# Frontend (Angular)
+## Frontend (Angular)
 
 Das Frontend dient der Visualisierung und Interaktion für die Nutzer (z.B. Radverkehrsbetreiber o.ä).
 
-## 1. Compodoc generieren
+### 1. Compodoc generieren
 
 Compodoc erstellt eine Übersicht der Komponenten-Hierarchie und Module:
 ```bash
@@ -188,7 +188,7 @@ npm run compodoc
 
 Die Dokumentation findest du danach unter: `frontend/documentation/index.html`
 
-## 2. Frontend starten
+### 2. Frontend starten
 ```bash
 npm install
 npm start
