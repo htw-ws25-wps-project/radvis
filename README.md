@@ -36,7 +36,7 @@ Bei Interesse an einer Demonstration des Systems wenden Sie sich bitte an [vertr
 
 ### Ausführung der Dokumentation von RadVIS- Maengelmelder
 # Backend-Entwicklung
-Wir unterscheiden im Projekt zwischen der schnellen Mock-API für das Frontend-Testing und dem Core-Backend für die Geschäftslogik.
+Das Backend enthält die Geschäftslogik und Datenverarbeitung der Anwendung des Mangelmelders.
 
 ## API-Schnittstellen (Swagger)
 Für das schnelle Testen der Endpunkte nutzen wir Swagger. Hier kannst du Requests direkt absenden, ohne ein Frontend zu bedienen.
@@ -67,7 +67,7 @@ cd backend
 ```
 # Frontend (Angular)
 
-Das Frontend dient der Visualisierung und Interaktion für die Nutzer.
+Das Frontend dient der Visualisierung und Interaktion für die Nutzer (z.B. Radverkehrsbetreiber o.ä).
 
 ## 1. Compodoc generieren
 
