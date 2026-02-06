@@ -78,6 +78,23 @@ import {MaengelTabelleComponent} from "./maengel/components/maengel-tabelle/maen
 import { maengelResolver } from './maengel/services/maengel-resolver';
 
 
+/**
+ * Routen-Konfiguration für den Viewer.
+ *
+ * ## Struktur
+ * - Root-Route: `{ path: VIEWER_ROUTE, component: ViewerComponent }`
+ * - Unterrouten pro Infrastruktur-/Feature-Bereich (Maßnahmen, Fahrradrouten, Mängel, …)
+ *
+ * ## Guards
+ * - {@link benutzerRegistriertGuard} / {@link benutzerAktivGuard}: schützen den Viewer-Zugriff
+ * - {@link discardGuard}: verhindert unbeabsichtigtes Navigieren bei ungespeicherten Änderungen
+ *
+ * ## Resolver
+ * Einige Detail-/Editor-Routen nutzen Resolver, um Daten vor dem Anzeigen der Komponente zu laden
+ * (z. B. Mängel über {@link maengelResolver}).
+ *
+ * Hinweis: Compodoc rendert diese JSDoc-Blöcke in der Modul-/Dateiübersicht.
+ */
 const routes: Routes = [
   {
     path: VIEWER_ROUTE,
@@ -248,4 +265,11 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
+/**
+ * Routing-Modul des Viewers.
+ *
+ * Stellt die Viewer-Routen via {@link RouterModule#forChild} bereit.
+ *
+ * @see ViewerModule
+ */
 export class ViewerRoutingModule {}
