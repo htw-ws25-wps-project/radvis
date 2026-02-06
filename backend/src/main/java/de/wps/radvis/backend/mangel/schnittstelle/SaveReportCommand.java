@@ -52,11 +52,11 @@ import java.util.List;
  * </p>
  */
 public class SaveReportCommand {
-	private static final int MAX_DESCRIPTION_LENGTH = 1000;
-	private static final String MIN_LATITUDE_DEGREES = "-90.0";
-	private static final String MAX_LATITUDE_DEGREES = "90.0";
-	private static final String MIN_LONGITUDE_DEGREES = "-180.0";
-	private static final String MAX_LONGITUDE_DEGREES = "180.0";
+    private static final int MAX_DESCRIPTION_LENGTH = 1000;
+    private static final String MIN_LATITUDE_DEGREES = "-90.0";
+    private static final String MAX_LATITUDE_DEGREES = "90.0";
+    private static final String MIN_LONGITUDE_DEGREES = "-180.0";
+    private static final String MAX_LONGITUDE_DEGREES = "180.0";
 
 	/**
 	 * Optionale Kategorie der Meldung.
