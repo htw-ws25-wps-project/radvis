@@ -64,17 +64,60 @@ import {MAENGEL} from "../../maengel/models/maengel.infrastruktur";
   ],
   standalone: false,
 })
+/**
+ * Zeigt Detail-Tabellen zu den aktuell selektierten Infrastrukturen im Viewer an.
+ *
+ * ## Zweck
+ * Diese Komponente visualisiert die Auswahl aus {@link InfrastrukturenSelektionService} in Form
+ * einer Tab-/Tabellen-Ansicht. Je nach Infrastruktur-Typ werden unterschiedliche Tabellen/Views
+ * im Template gerendert.
+ *
+ * ## Features
+ * - Reagiert auf Änderungen der Selektion (Observable-Stream).
+ * - Verwaltet eine {@link activeInfrastruktur} als aktuell aktives Tab-Element.
+ * - Kann minimiert werden ({@link minimized}) und optional als Dialog verwendet werden ({@link asDialog}).
+ * - Bietet ein Output-Event zum Umschalten in eine Vollbildansicht ({@link showFullscreen}).
+ * - Tastenkürzel: `Ctrl + Alt + Shift + T` fokussiert den ersten Tab (A11y/Power-User).
+ *
+ * ## Change Detection
+ * Verwendet {@link ChangeDetectionStrategy.OnPush}. Da die Komponente intern (im `subscribe`)
+ * den {@link activeInfrastruktur}-State setzt, wird explizit `markForCheck()` aufgerufen.
+ *
+ * @see InfrastrukturenSelektionService
+ */
 export class InfrastrukturenTabellenComponent {
+  /**
+   * Container-Element der Tabs (aus dem Template via Template-Ref `#tabContainer`).
+   *
+   * Wird genutzt, um per Tastenkürzel den ersten Tab zu fokussieren.
+   */
   @ViewChild('tabContainer', { read: ElementRef })
   tabContainer: ElementRef | undefined;
 
+  /**
+   * Wird ausgelöst, wenn der Nutzer in die Vollbildansicht wechseln möchte.
+   */
   @Output()
   showFullscreen = new EventEmitter<void>();
 
+  /**
+   * Wenn `true`, wird die Komponente im Dialog-Kontext dargestellt.
+   *
+   * (Das konkrete Layout/Verhalten wird im Template/SCSS umgesetzt.)
+   */
   @Input()
   asDialog = false;
 
+  /**
+   * Stream der aktuell selektierten Infrastrukturen.
+   *
+   * Typischerweise im Template via `async`-Pipe genutzt.
+   */
   selektierteInfrastrukturen$: Observable<Infrastruktur[]>;
+
+  /**
+   * Infrastruktur-Konstanten für Typprüfungen/Zuordnung im Template.
+   */
   readonly FAHRRADROUTE = FAHRRADROUTE;
   readonly MASSNAHMEN = MASSNAHMEN;
   readonly IMPORTPROTOKOLLE = IMPORTPROTOKOLLE;
@@ -86,10 +129,25 @@ export class InfrastrukturenTabellenComponent {
   readonly SERVICESTATIONEN = SERVICESTATIONEN;
   readonly LEIHSTATIONEN = LEIHSTATIONEN;
   readonly FAHRRADZAEHLSTELLE = FAHRRADZAEHLSTELLE;
+
+  /**
+   * Wenn `true`, ist die Tabellenansicht minimiert (eingeklappt).
+   */
   minimized = false;
 
+  /**
+   * Die aktuell aktive Infrastruktur (entspricht dem aktiven Tab).
+   *
+   * Wird automatisch aktualisiert, wenn
+   * - die aktive Infrastruktur nicht mehr in der Selektion enthalten ist oder
+   * - noch keine aktive Infrastruktur gesetzt ist.
+   */
   activeInfrastruktur: Infrastruktur | null = null;
 
+  /**
+   * @param infrastrukturenSelektionService Liefert/verwaltet die Selektion der Infrastrukturen
+   * @param changeDetector Wird genutzt, um bei OnPush nach internen State-Änderungen eine Prüfung anzustoßen
+   */
   constructor(
     private infrastrukturenSelektionService: InfrastrukturenSelektionService,
     changeDetector: ChangeDetectorRef
@@ -106,18 +164,33 @@ export class InfrastrukturenTabellenComponent {
     });
   }
 
+  /**
+   * Tastenkürzel: `Ctrl + Alt + Shift + T`.
+   *
+   * Fokussiert (falls vorhanden) den ersten Tab innerhalb des Tab-Containers.
+   * Unterstützt schnelle Tastaturbedienung und Barrierefreiheit.
+   */
   @HostListener('document:keydown.control.alt.shift.t')
   onShortcut(): void {
     this.tabContainer?.nativeElement.querySelector('div[role="tab"]')?.focus();
   }
 
+  /**
+   * Triggert das {@link showFullscreen}-Event.
+   */
   onFullScreen(): void {
     this.showFullscreen.next();
   }
 
+  /**
+   * Klappt die Tabellenansicht ein/aus.
+   */
   onToggleMinimization(): void {
     this.minimized = !this.minimized;
   }
 
+  /**
+   * Infrastruktur-Konstante für „Mängel“ (nur im Template benötigt).
+   */
   protected readonly MAENGEL = MAENGEL;
 }

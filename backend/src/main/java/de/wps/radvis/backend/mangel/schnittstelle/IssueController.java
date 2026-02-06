@@ -34,34 +34,34 @@ import java.util.List;
  */
 public class IssueController {
 
-    /**
-     * Liefert alle verfügbaren {@link Issue}-Werte.
-     * <p>
-     * Hinweis: Je nach Jackson-Konfiguration/Annotations am Enum kann die JSON-Repräsentation
-     * z. B. als Name oder als Label erfolgen.
-     * </p>
-     *
-     * @return Liste aller {@link Issue}-Werte
-     */
-    @GetMapping("/issues")
-    public List<Issue> getIssues() {
-        return List.of(Issue.values());
-    }
+	/**
+	 * Liefert alle verfügbaren {@link Issue}-Werte.
+	 * <p>
+	 * Hinweis: Je nach Jackson-Konfiguration/Annotations am Enum kann die JSON-Repräsentation
+	 * z. B. als Name oder als Label erfolgen.
+	 * </p>
+	 *
+	 * @return Liste aller {@link Issue}-Werte
+	 */
+	@GetMapping("/issues")
+	public List<Issue> getIssues() {
+		return List.of(Issue.values());
+	}
 
-    /**
-     * Liefert alle verfügbaren {@link Issue}-Werte als Schlüssel/Label-Paare.
-     * <p>
-     * {@link IssueLabelView#key()} entspricht dabei typischerweise dem Enum-Namen
-     * (z. B. {@code SCHLAGLOCH}); {@link IssueLabelView#label()} dem menschenlesbaren Text.
-     * </p>
-     *
-     * @return Liste von {@link IssueLabelView} zur Anzeige im Frontend (z. B. Dropdown)
-     */
-    @GetMapping("/issue-labels")
-    public List<IssueLabelView> getIssueLabels() {
-        return Arrays.stream(Issue.values())
-                .map(issue -> new IssueLabelView(issue.name(), issue.getLabel()))
-                .toList();
-    }
+	/**
+	 * Liefert alle verfügbaren {@link Issue}-Werte als Schlüssel/Label-Paare.
+	 * <p>
+	 * {@link IssueLabelView#key()} entspricht dabei typischerweise dem Enum-Namen
+	 * (z. B. {@code SCHLAGLOCH}); {@link IssueLabelView#label()} dem menschenlesbaren Text.
+	 * </p>
+	 *
+	 * @return Liste von {@link IssueLabelView} zur Anzeige im Frontend (z. B. Dropdown)
+	 */
+	@GetMapping("/issue-labels")
+	public List<IssueLabelView> getIssueLabels() {
+		return Arrays.stream(Issue.values())
+			.map(issue -> new IssueLabelView(issue.name(), issue.getLabel()))
+			.toList();
+	}
 }
 

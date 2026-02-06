@@ -33,11 +33,11 @@ import java.util.List;
  * Verantwortlichkeiten:
  * </p>
  * <ul>
- *   <li>Erstellen von Meldungen aus API-Commands ({@link SaveReportCommand}) inkl. Konvertierung.</li>
- *   <li>Lesen einzelner Meldungen und Abbildung auf View-Modelle ({@link ReportView}).</li>
- *   <li>Auflisten aller Meldungen.</li>
- *   <li>Ausliefern einzelner Fotos einer Meldung als {@link ReportPhotoView}.</li>
- *   <li>Ändern des Bearbeitungsstatus ({@link ReportStatus}).</li>
+ * <li>Erstellen von Meldungen aus API-Commands ({@link SaveReportCommand}) inkl. Konvertierung.</li>
+ * <li>Lesen einzelner Meldungen und Abbildung auf View-Modelle ({@link ReportView}).</li>
+ * <li>Auflisten aller Meldungen.</li>
+ * <li>Ausliefern einzelner Fotos einer Meldung als {@link ReportPhotoView}.</li>
+ * <li>Ändern des Bearbeitungsstatus ({@link ReportStatus}).</li>
  * </ul>
  *
  * <h2>Transaktionen</h2>

@@ -24,18 +24,18 @@ package de.wps.radvis.backend.mangel.domain.valueObjects;
  * sollten Enum-Konstanten nicht umbenannt werden, da dies Abwärtskompatibilität und bestehende Daten brechen kann.
  */
 public enum ReportStatus {
-    /**
-     * Die Meldung ist neu bzw. noch nicht in Bearbeitung genommen.
-     */
-    OFFEN,
+	/**
+	 * Die Meldung ist neu bzw. noch nicht in Bearbeitung genommen.
+	 */
+	OFFEN,
 
-    /**
-     * Die Meldung wird aktuell geprüft oder bearbeitet.
-     */
-    IN_BEARBEITUNG,
+	/**
+	 * Die Meldung wird aktuell geprüft oder bearbeitet.
+	 */
+	IN_BEARBEITUNG,
 
-    /**
-     * Die Meldung ist abschließend bearbeitet; es sind keine weiteren Schritte vorgesehen.
-     */
-    ERLEDIGT
+	/**
+	 * Die Meldung ist abschließend bearbeitet; es sind keine weiteren Schritte vorgesehen.
+	 */
+	ERLEDIGT
 }

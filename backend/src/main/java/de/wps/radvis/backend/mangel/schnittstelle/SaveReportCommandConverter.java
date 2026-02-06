@@ -35,9 +35,9 @@ import java.util.List;
  * Verantwortlichkeiten:
  * </p>
  * <ul>
- *   <li>Validierung der Dateigrößen (Einzeldatei und Gesamtsumme).</li>
- *   <li>Umrechnung von Koordinaten (Latitude/Longitude) in eine {@link Point}-Geometrie.</li>
- *   <li>Mapping der hochgeladenen Dateien auf {@link ReportPhoto}-Entitäten.</li>
+ * <li>Validierung der Dateigrößen (Einzeldatei und Gesamtsumme).</li>
+ * <li>Umrechnung von Koordinaten (Latitude/Longitude) in eine {@link Point}-Geometrie.</li>
+ * <li>Mapping der hochgeladenen Dateien auf {@link ReportPhoto}-Entitäten.</li>
  * </ul>
  *
  * <h2>Fehlerbehandlung</h2>
@@ -52,22 +52,27 @@ public class SaveReportCommandConverter {
      */
     private static final long MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
 
-    /**
-     * Maximale Gesamtgröße aller Dateien in Bytes (30 MB).
-     */
-    private static final long MAX_TOTAL_SIZE = 30 * 1024 * 1024; // 30 MB
+	/**
+	 * Maximale Größe einer einzelnen Datei in Bytes (10 MB).
+	 */
+	private static final long MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
 
-    /**
-     * Erstellt aus einem {@link SaveReportCommand} eine {@link Report}-Entität.
-     * <p>
-     * Falls Dateien vorhanden sind, werden diese als Fotos an die Meldung gehängt.
-     * </p>
-     *
-     * @param command Eingabedaten aus der Schnittstelle
-     * @return neue, noch nicht zwingend persistierte {@link Report}-Entität
-     */
-    public Report toReport(SaveReportCommand command) {
-        validateFileSizes(command.getFiles());
+	/**
+	 * Maximale Gesamtgröße aller Dateien in Bytes (30 MB).
+	 */
+	private static final long MAX_TOTAL_SIZE = 30 * 1024 * 1024; // 30 MB
+
+	/**
+	 * Erstellt aus einem {@link SaveReportCommand} eine {@link Report}-Entität.
+	 * <p>
+	 * Falls Dateien vorhanden sind, werden diese als Fotos an die Meldung gehängt.
+	 * </p>
+	 *
+	 * @param command Eingabedaten aus der Schnittstelle
+	 * @return neue, noch nicht zwingend persistierte {@link Report}-Entität
+	 */
+	public Report toReport(SaveReportCommand command) {
+		validateFileSizes(command.getFiles());
 
         Point geometrie = toPoint(command.getLatitude(), command.getLongitude());
 
@@ -86,33 +91,33 @@ public class SaveReportCommandConverter {
         return report;
     }
 
-    /**
-     * Erstellt aus Latitude/Longitude einen {@link Point}.
-     * <p>
-     * Konvention: Longitude wird als X, Latitude als Y gespeichert.
-     * </p>
-     *
-     * @param latitude Breitengrad (Y)
-     * @param longitude Längengrad (X)
-     * @return Punktgeometrie
-     */
-    public static Point toPoint(BigDecimal latitude, BigDecimal longitude) {
-        return GEOMETRY_FACTORY.createPoint(new Coordinate(
-                longitude.doubleValue(), // Longitude ist X
-                latitude.doubleValue()   // Latitude ist Y
-        ));
-    }
+	/**
+	 * Erstellt aus Latitude/Longitude einen {@link Point}.
+	 * <p>
+	 * Konvention: Longitude wird als X, Latitude als Y gespeichert.
+	 * </p>
+	 *
+	 * @param latitude Breitengrad (Y)
+	 * @param longitude Längengrad (X)
+	 * @return Punktgeometrie
+	 */
+	public static Point toPoint(BigDecimal latitude, BigDecimal longitude) {
+		return GEOMETRY_FACTORY.createPoint(new Coordinate(
+			longitude.doubleValue(), // Longitude ist X
+			latitude.doubleValue()   // Latitude ist Y
+		));
+	}
 
-    /**
-     * Prüft die Größenbeschränkungen der hochgeladenen Dateien.
-     *
-     * @param files Liste der Dateien (kann {@code null} oder leer sein)
-     * @throws ResponseStatusException wenn eine Datei größer als {@value #MAX_FILE_SIZE} ist oder
-     *                                 die Gesamtsumme {@value #MAX_TOTAL_SIZE} überschreitet
-     */
-    private void validateFileSizes(List<MultipartFile> files) {
-        if (files == null || files.isEmpty())
-            return;
+	/**
+	 * Prüft die Größenbeschränkungen der hochgeladenen Dateien.
+	 *
+	 * @param files Liste der Dateien (kann {@code null} oder leer sein)
+	 * @throws ResponseStatusException wenn eine Datei größer als {@value #MAX_FILE_SIZE} ist oder
+	 *     die Gesamtsumme {@value #MAX_TOTAL_SIZE} überschreitet
+	 */
+	private void validateFileSizes(List<MultipartFile> files) {
+		if (files == null || files.isEmpty())
+			return;
 
         long totalSize = 0;
         for (MultipartFile file : files) {
@@ -129,23 +134,23 @@ public class SaveReportCommandConverter {
         }
     }
 
-    /**
-     * Mappt eine hochgeladene Datei auf eine {@link ReportPhoto}-Entität.
-     *
-     * @param file hochgeladene Datei
-     * @return {@link ReportPhoto}-Entität
-     * @throws UncheckedIOException wenn das Lesen der Datei fehlschlägt
-     */
-    private ReportPhoto mapToEntity(MultipartFile file) {
-        try {
-            return ReportPhoto.builder()
-                    .data(file.getBytes())
-                    .filename(file.getOriginalFilename())
-                    .contentType(file.getContentType())
-                    .size(file.getSize())
-                    .build();
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
-    }
+	/**
+	 * Mappt eine hochgeladene Datei auf eine {@link ReportPhoto}-Entität.
+	 *
+	 * @param file hochgeladene Datei
+	 * @return {@link ReportPhoto}-Entität
+	 * @throws UncheckedIOException wenn das Lesen der Datei fehlschlägt
+	 */
+	private ReportPhoto mapToEntity(MultipartFile file) {
+		try {
+			return ReportPhoto.builder()
+				.data(file.getBytes())
+				.filename(file.getOriginalFilename())
+				.contentType(file.getContentType())
+				.size(file.getSize())
+				.build();
+		} catch (IOException e) {
+			throw new UncheckedIOException(e);
+		}
+	}
 }

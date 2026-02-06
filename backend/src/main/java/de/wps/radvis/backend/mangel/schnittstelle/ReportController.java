@@ -41,63 +41,63 @@ public class ReportController {
 
     private final ReportService reportService;
 
-    /**
-     * Erstellt eine neue Mangelmeldung.
-     * <p>
-     * Erwartet {@code multipart/form-data}. Neben den Meldungsdaten können optional Bilddateien
-     * mitgesendet werden (siehe {@link SaveReportCommand}).
-     * </p>
-     *
-     * @param command Eingabedaten zur Erstellung (werden validiert)
-     * @return {@link ReportView} der neu erstellten Meldung
-     */
-    @PostMapping(consumes = { "multipart/form-data" })
-    public ResponseEntity<ReportView> createReport(@ModelAttribute @Valid SaveReportCommand command) {
-        Report created = reportService.create(command);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ReportView(created));
-    }
+	/**
+	 * Erstellt eine neue Mangelmeldung.
+	 * <p>
+	 * Erwartet {@code multipart/form-data}. Neben den Meldungsdaten können optional Bilddateien
+	 * mitgesendet werden (siehe {@link SaveReportCommand}).
+	 * </p>
+	 *
+	 * @param command Eingabedaten zur Erstellung (werden validiert)
+	 * @return {@link ReportView} der neu erstellten Meldung
+	 */
+	@PostMapping(consumes = { "multipart/form-data" })
+	public ResponseEntity<ReportView> createReport(@ModelAttribute @Valid SaveReportCommand command) {
+		Report created = reportService.create(command);
+		return ResponseEntity.status(HttpStatus.CREATED).body(new ReportView(created));
+	}
 
-    /**
-     * Liefert alle vorhandenen Mangelmeldungen.
-     *
-     * @return Liste aller Meldungen als {@link ReportView}
-     */
-    @GetMapping
-    public ResponseEntity<List<ReportView>> getAllReports() {
-        List<ReportView> reports = reportService.getAllReports();
-        return ResponseEntity.ok(reports);
-    }
+	/**
+	 * Liefert alle vorhandenen Mangelmeldungen.
+	 *
+	 * @return Liste aller Meldungen als {@link ReportView}
+	 */
+	@GetMapping
+	public ResponseEntity<List<ReportView>> getAllReports() {
+		List<ReportView> reports = reportService.getAllReports();
+		return ResponseEntity.ok(reports);
+	}
 
-    /**
-     * Liefert eine einzelne Mangelmeldung.
-     *
-     * @param id ID der Meldung
-     * @return Meldung als {@link ReportView} oder {@code 404 Not Found}, falls nicht vorhanden
-     */
-    @GetMapping("/{id}")
-    public ResponseEntity<ReportView> getReport(@PathVariable Long id) {
-        try {
-            return ResponseEntity.ok(reportService.getReport(id));
-        } catch (java.util.NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
+	/**
+	 * Liefert eine einzelne Mangelmeldung.
+	 *
+	 * @param id ID der Meldung
+	 * @return Meldung als {@link ReportView} oder {@code 404 Not Found}, falls nicht vorhanden
+	 */
+	@GetMapping("/{id}")
+	public ResponseEntity<ReportView> getReport(@PathVariable Long id) {
+		try {
+			return ResponseEntity.ok(reportService.getReport(id));
+		} catch (java.util.NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
 
-    /**
-     * Liefert ein einzelnes Foto einer Mangelmeldung als Binärdaten.
-     * <p>
-     * Der {@code Content-Type} wird aus dem gespeicherten Foto übernommen. Zusätzlich wird ein
-     * {@code Content-Disposition: inline} Header gesetzt, um eine direkte Anzeige im Browser zu ermöglichen.
-     * </p>
-     *
-     * @param reportId ID der Meldung
-     * @param photoId ID des Fotos
-     * @return Binärdaten des Bildes inkl. passendem {@code Content-Type}
-     */
-    @GetMapping("/{reportId}/photos/{photoId}")
-    public ResponseEntity<byte[]> getPhoto(
-            @PathVariable Long reportId,
-            @PathVariable Long photoId) {
+	/**
+	 * Liefert ein einzelnes Foto einer Mangelmeldung als Binärdaten.
+	 * <p>
+	 * Der {@code Content-Type} wird aus dem gespeicherten Foto übernommen. Zusätzlich wird ein
+	 * {@code Content-Disposition: inline} Header gesetzt, um eine direkte Anzeige im Browser zu ermöglichen.
+	 * </p>
+	 *
+	 * @param reportId ID der Meldung
+	 * @param photoId ID des Fotos
+	 * @return Binärdaten des Bildes inkl. passendem {@code Content-Type}
+	 */
+	@GetMapping("/{reportId}/photos/{photoId}")
+	public ResponseEntity<byte[]> getPhoto(
+		@PathVariable Long reportId,
+		@PathVariable Long photoId) {
 
         ReportPhotoView photo = reportService.getPhoto(reportId, photoId);
 
@@ -110,20 +110,20 @@ public class ReportController {
                 .body(photo.data());
     }
 
-    /**
-     * Aktualisiert den Status einer Mangelmeldung.
-     * <p>
-     * Gibt bei Erfolg keinen Response-Body zurück ({@code 204 No Content}).
-     * </p>
-     *
-     * @param id ID der Meldung
-     * @param command Request-Body mit neuem Status (wird validiert)
-     */
-    @PatchMapping("/{id}/status")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateStatus(
-            @PathVariable Long id,
-            @RequestBody @Valid UpdateReportStatusCommand command) {
+	/**
+	 * Aktualisiert den Status einer Mangelmeldung.
+	 * <p>
+	 * Gibt bei Erfolg keinen Response-Body zurück ({@code 204 No Content}).
+	 * </p>
+	 *
+	 * @param id ID der Meldung
+	 * @param command Request-Body mit neuem Status (wird validiert)
+	 */
+	@PatchMapping("/{id}/status")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void updateStatus(
+		@PathVariable Long id,
+		@RequestBody @Valid UpdateReportStatusCommand command) {
 
         reportService.updateStatus(id, command.getStatus());
     }

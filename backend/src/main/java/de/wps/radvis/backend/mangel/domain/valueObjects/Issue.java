@@ -28,9 +28,9 @@ import lombok.AllArgsConstructor;
  *
  * <h2>Verwendung</h2>
  * <ul>
- *   <li>In {@code Report} als Feld {@code issue}; wenn kein Wert angegeben wird, kann ein
- *   Default (z. B. {@code KEINE_KATEGORIE}) gesetzt werden.</li>
- *   <li>Über {@code IssueController#getIssues()} zur Anzeige/Auswahl im Frontend.</li>
+ * <li>In {@code Report} als Feld {@code issue}; wenn kein Wert angegeben wird, kann ein
+ * Default (z. B. {@code KEINE_KATEGORIE}) gesetzt werden.</li>
+ * <li>Über {@code IssueController#getIssues()} zur Anzeige/Auswahl im Frontend.</li>
  * </ul>
  *
  * <h2>Hinweis zur Persistenz/Serialisierung</h2>

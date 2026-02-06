@@ -41,9 +41,9 @@ import java.util.List;
  *
  * <h2>Validierung</h2>
  * <ul>
- *   <li>{@link #description} ist optional, aber auf {@value #MAX_DESCRIPTION_LENGTH} Zeichen begrenzt.</li>
- *   <li>{@link #latitude} muss gesetzt sein und im Bereich [-90; 90] liegen.</li>
- *   <li>{@link #longitude} muss gesetzt sein und im Bereich [-180; 180] liegen.</li>
+ * <li>{@link #description} ist optional, aber auf {@value #MAX_DESCRIPTION_LENGTH} Zeichen begrenzt.</li>
+ * <li>{@link #latitude} muss gesetzt sein und im Bereich [-90; 90] liegen.</li>
+ * <li>{@link #longitude} muss gesetzt sein und im Bereich [-180; 180] liegen.</li>
  * </ul>
  *
  * <p>
@@ -58,37 +58,37 @@ public class SaveReportCommand {
     private static final String MIN_LONGITUDE_DEGREES = "-180.0";
     private static final String MAX_LONGITUDE_DEGREES = "180.0";
 
-    /**
-     * Optionale Kategorie der Meldung.
-     * Falls nicht gesetzt, kann in der Domäne ein Standardwert verwendet werden
-     * (z. B. {@code KEINE_KATEGORIE}).
-     */
-    private Issue issue;
+	/**
+	 * Optionale Kategorie der Meldung.
+	 * Falls nicht gesetzt, kann in der Domäne ein Standardwert verwendet werden
+	 * (z. B. {@code KEINE_KATEGORIE}).
+	 */
+	private Issue issue;
 
-    /**
-     * Optionale Beschreibung des Mangels (Freitext).
-     */
-    @Length(max = MAX_DESCRIPTION_LENGTH)
-    private String description;
+	/**
+	 * Optionale Beschreibung des Mangels (Freitext).
+	 */
+	@Length(max = MAX_DESCRIPTION_LENGTH)
+	private String description;
 
-    /**
-     * Breitengrad in Dezimalgrad.
-     */
-    @NotNull
-    @DecimalMin(MIN_LATITUDE_DEGREES)
-    @DecimalMax(MAX_LATITUDE_DEGREES)
-    private BigDecimal latitude;
+	/**
+	 * Breitengrad in Dezimalgrad.
+	 */
+	@NotNull
+	@DecimalMin(MIN_LATITUDE_DEGREES)
+	@DecimalMax(MAX_LATITUDE_DEGREES)
+	private BigDecimal latitude;
 
-    /**
-     * Längengrad in Dezimalgrad.
-     */
-    @NotNull
-    @DecimalMin(MIN_LONGITUDE_DEGREES)
-    @DecimalMax(MAX_LONGITUDE_DEGREES)
-    private BigDecimal longitude;
+	/**
+	 * Längengrad in Dezimalgrad.
+	 */
+	@NotNull
+	@DecimalMin(MIN_LONGITUDE_DEGREES)
+	@DecimalMax(MAX_LONGITUDE_DEGREES)
+	private BigDecimal longitude;
 
-    /**
-     * Optionale Liste von Bilddateien, die der Meldung zugeordnet werden sollen.
-     */
-    List<MultipartFile> files;
+	/**
+	 * Optionale Liste von Bilddateien, die der Meldung zugeordnet werden sollen.
+	 */
+	List<MultipartFile> files;
 }

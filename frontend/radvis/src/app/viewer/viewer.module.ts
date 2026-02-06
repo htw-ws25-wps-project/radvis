@@ -12,6 +12,7 @@
  * See the Licence for the specific language governing permissions and limitations under the Licence.
  */
 
+// ... existing code ...
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -52,7 +53,7 @@ import { FahrradroutenProviderService } from 'src/app/viewer/viewer-shared/servi
 import { ViewerSharedModule } from 'src/app/viewer/viewer-shared/viewer-shared.module';
 import { WegweisendeBeschilderungModule } from 'src/app/viewer/wegweisende-beschilderung/wegweisende-beschilderung.module';
 import { WeitereKartenebenenModule } from 'src/app/viewer/weitere-kartenebenen/weitere-kartenebenen.module';
-import { MaengelModule } from './maengel/maengel.module' ;
+import { MaengelModule } from './maengel/maengel.module';
 
 @NgModule({
   declarations: [
@@ -102,4 +103,22 @@ import { MaengelModule } from './maengel/maengel.module' ;
   ],
   providers: [{ provide: FahrradroutenProviderService, useClass: FahrradrouteService }],
 })
+/**
+ * Viewer-Feature-Modul (Karten-/Analysebereich).
+ *
+ * ## Zweck
+ * Bündelt alle Viewer-Komponenten und die fachlichen Feature-Module, die im Viewer verfügbar sind.
+ * Außerdem wird das Viewer-Routing eingebunden ({@link ViewerRoutingModule}).
+ *
+ * ## Menü-Reihenfolge
+ * Die Reihenfolge der Feature-Module in {@link NgModule#imports imports} (ab der markierten Stelle)
+ * beeinflusst die Reihenfolge der Einträge im linken Menü.
+ *
+ * ## Exporte
+ * Exportiert {@link ExportButtonComponent}, damit der Export-Button außerhalb des Viewer-Moduls
+ * verwendet werden kann.
+ *
+ * @see ViewerRoutingModule
+ */
 export class ViewerModule {}
+// ... existing code ...

@@ -65,3 +65,24 @@ Um den Server lokal zu starten:
 cd backend
 ./mvnw spring-boot:run
 ```
+# Frontend (Angular)
+
+Das Frontend dient der Visualisierung und Interaktion für die Nutzer.
+
+## 1. Compodoc generieren
+
+Compodoc erstellt eine Übersicht der Komponenten-Hierarchie und Module:
+```bash
+cd frontend
+npm run compodoc
+```
+
+Die Dokumentation findest du danach unter: `frontend/documentation/index.html`
+
+## 2. Frontend starten
+```bash
+npm install
+npm start
+```
+
+Das Interface ist unter http://localhost:4200 erreichbar.
