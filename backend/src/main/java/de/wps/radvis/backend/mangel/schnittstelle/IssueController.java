@@ -25,17 +25,43 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+/**
+ * REST-Controller zur Bereitstellung der verfügbaren {@link Issue}-Kategorien.
+ * <p>
+ * Stellt Endpunkte bereit, um entweder die reinen Enum-Werte oder eine für UI-Zwecke geeignete
+ * Schlüssel/Label-Repräsentation abzurufen.
+ * </p>
+ */
 public class IssueController {
 
-	@GetMapping("/issues")
-	public List<Issue> getIssues() {
-		return List.of(Issue.values());
-	}
+    /**
+     * Liefert alle verfügbaren {@link Issue}-Werte.
+     * <p>
+     * Hinweis: Je nach Jackson-Konfiguration/Annotations am Enum kann die JSON-Repräsentation
+     * z. B. als Name oder als Label erfolgen.
+     * </p>
+     *
+     * @return Liste aller {@link Issue}-Werte
+     */
+    @GetMapping("/issues")
+    public List<Issue> getIssues() {
+        return List.of(Issue.values());
+    }
 
-	@GetMapping("/issue-labels")
-	public List<IssueLabelView> getIssueLabels() {
-		return Arrays.stream(Issue.values())
-			.map(issue -> new IssueLabelView(issue.name(), issue.getLabel()))
-			.toList();
-	}
+    /**
+     * Liefert alle verfügbaren {@link Issue}-Werte als Schlüssel/Label-Paare.
+     * <p>
+     * {@link IssueLabelView#key()} entspricht dabei typischerweise dem Enum-Namen
+     * (z. B. {@code SCHLAGLOCH}); {@link IssueLabelView#label()} dem menschenlesbaren Text.
+     * </p>
+     *
+     * @return Liste von {@link IssueLabelView} zur Anzeige im Frontend (z. B. Dropdown)
+     */
+    @GetMapping("/issue-labels")
+    public List<IssueLabelView> getIssueLabels() {
+        return Arrays.stream(Issue.values())
+                .map(issue -> new IssueLabelView(issue.name(), issue.getLabel()))
+                .toList();
+    }
 }
+

@@ -18,6 +18,25 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
+/**
+ * Kategorisierung (Issue) einer Mangelmeldung.
+ * <p>
+ * Ein {@code Issue} beschreibt die fachliche Einordnung eines gemeldeten Problems (z. B. Schäden,
+ * fehlende Infrastruktur, Markierungsprobleme usw.). Die Werte werden u. a. über die Schnittstelle
+ * bereitgestellt (siehe {@code GET /issues}) und können im {@code Report} gespeichert werden.
+ * </p>
+ *
+ * <h2>Verwendung</h2>
+ * <ul>
+ *   <li>In {@code Report} als Feld {@code issue}; wenn kein Wert angegeben wird, kann ein
+ *   Default (z. B. {@code KEINE_KATEGORIE}) gesetzt werden.</li>
+ *   <li>Über {@code IssueController#getIssues()} zur Anzeige/Auswahl im Frontend.</li>
+ * </ul>
+ *
+ * <h2>Hinweis zur Persistenz/Serialisierung</h2>
+ * Wird ein {@code Issue} als {@code EnumType.STRING} persistiert oder als String über JSON übertragen,
+ * sind nachträgliche Umbenennungen von Enum-Konstanten in der Regel inkompatibel und sollten vermieden werden.
+ */
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum Issue {
 	SCHLAGLOCH("Schlagloch"),

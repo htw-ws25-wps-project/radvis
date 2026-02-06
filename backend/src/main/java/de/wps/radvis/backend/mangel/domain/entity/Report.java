@@ -28,16 +28,59 @@ import static org.valid4j.Assertive.require;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+/**
+ * Repräsentiert eine Meldung (Report) über einen Mangel bzw. ein Problem im System.
+ * <p>
+ * Ein {@link Report} enthält:
+ * </p>
+ * <ul>
+ *   <li>eine Kategorie/Art des Problems ({@link #issue})</li>
+ *   <li>eine optionale Beschreibung ({@link #description})</li>
+ *   <li>eine Geometrie/Position als {@link Point} ({@link #geometrie})</li>
+ *   <li>den Erstellzeitpunkt ({@link #creationDate})</li>
+ *   <li>einen Bearbeitungsstatus ({@link #status})</li>
+ *   <li>zugeordnete Fotos ({@link #photos})</li>
+ * </ul>
+ *
+ * <h2>Fachliche Regeln / Invarianten</h2>
+ * <ul>
+ *   <li>{@link #geometrie} muss gesetzt sein (nicht {@code null}).</li>
+ *   <li>{@link #description} darf maximal {@value #MAX_DESCRIPTION_LENGTH} Zeichen lang sein.</li>
+ *   <li>Wenn {@link #issue} nicht angegeben ist, wird {@link Issue#KEINE_KATEGORIE} verwendet.</li>
+ *   <li>Neu erstellte Meldungen starten mit {@link ReportStatus#OFFEN}.</li>
+ * </ul>
+ *
+ * <h2>Persistenz</h2>
+ * Die Fotos sind als {@code @OneToMany} mit {@code cascade = ALL} und {@code orphanRemoval = true}
+ * modelliert. Das bedeutet, dass Fotos beim Speichern/Löschen der Meldung mitgeführt werden und
+ * entfernte Fotos als verwaiste Entitäten gelöscht werden können.
+ */
 public class Report extends AbstractEntity {
 	private static final int MAX_DESCRIPTION_LENGTH = 1000;
 
+	/**
+	 * Kategorie/Art des gemeldeten Problems.
+	 * Wird als String-Wert persistiert.
+	 */
 	@Enumerated(EnumType.STRING)
 	private Issue issue;
 
+	/**
+	 * Optionale Freitextbeschreibung zur Meldung.
+	 * Darf maximal {@value #MAX_DESCRIPTION_LENGTH} Zeichen lang sein.
+	 */
 	private String description;
 
+	/**
+	 * Geometrische Position der Meldung (z. B. Punktkoordinate).
+	 * Muss gesetzt sein (nicht {@code null}).
+	 */
 	private Point geometrie;
 
+	/**
+	 * Zeitpunkt der Erstellung der Meldung.
+	 * Wird bei Erstellung (Builder) automatisch auf {@link LocalDateTime#now()} gesetzt.
+	 */
 	private LocalDateTime creationDate;
 
 	@Setter
@@ -72,6 +115,15 @@ public class Report extends AbstractEntity {
 		}
 	}
 
+	/**
+	 * Fügt der Meldung ein Foto hinzu und stellt die bidirektionale Zuordnung her.
+	 * <p>
+	 * Hinweis: Diese Methode erwartet, dass {@code photo} gültig ist. Die Rückreferenz wird
+	 * über {@link ReportPhoto#assignToReport(Report)} gesetzt.
+	 * </p>
+	 *
+	 * @param photo das hinzuzufügende Foto
+	 */
 	public void addPhoto(ReportPhoto photo) {
 		this.photos.add(photo);
 		photo.assignToReport(this);
