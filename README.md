@@ -1,88 +1,113 @@
-# RadVIS (Radverkehrsinfrastruktur-System)
+# RadVIS – Core-System (Listen-, Tabellen- und Kartenintegration)
 
-RadVIS ist eine Client-Server-Anwendung zur Erfassung und Verwaltung der Radverkehrsinfrastruktur. Das System wurde 2021 vom _Ministerium für Verkehr Baden-Württemberg_ in Auftrag gegeben und seither stetig weiterentwickelt. Weitere Informationen und Hintergründe finden Sie auf der [Projekt-Seite zu aktivmobil BW](https://www.aktivmobil-bw.de/radverkehr/raddaten/radvis-bw/).
+> ⚠️ **Hinweis**  
+> Dieses Repository enthält das **RadVIS-Core-System**.  
+> Hier werden Mängel **persistiert**, **in Tabellen und Listen dargestellt**  
+> und **im zentralen RadVIS-Webclient auf der Karte visualisiert**.  
+>  
+> Die eigenständige Anwendung zur **Erfassung neuer Mängelmeldungen
+> (Mängelmelder-App)** ist in einem **separaten Repository** umgesetzt
+> und **nicht Bestandteil dieses Repositories**.
+
+---
+
+## Kontext: RadVIS
+
+RadVIS (Radverkehrsinfrastruktur-System) ist eine Client-Server-Anwendung zur
+Erfassung und Verwaltung der Radverkehrsinfrastruktur.  
+Das System wurde 2021 vom *Ministerium für Verkehr Baden-Württemberg* in Auftrag
+gegeben und wird seither kontinuierlich weiterentwickelt.
+
+Weitere Informationen und Hintergründe finden Sie auf der offiziellen Projektseite:  
+https://www.aktivmobil-bw.de/radverkehr/raddaten/radvis-bw/
+
+---
+
+## Dieses Repository: RadVIS Core
+
+Dieses Repository stellt das **zentrale RadVIS-System** bereit.  
+Es ist verantwortlich für die **fachliche Verarbeitung, Speicherung und
+Visualisierung** der Daten innerhalb von RadVIS.
+
+Der Funktionsumfang dieses Repositories umfasst insbesondere:
+
+- Persistenz von Mängelmeldungen im RadVIS-Datenmodell
+- Darstellung der Mängel in **Tabellen und Listen**
+- Visualisierung der Mängel im **RadVIS-Webclient auf der Karte**
+- Fachliche Prozesse und Validierungen
+- Bereitstellung von Schnittstellen für angebundene Anwendungen
+  (z. B. den externen Mängelmelder)
+
+Die **Erfassung neuer Mängelmeldungen** (inkl. Kartenklick, Formular und
+Foto-Upload) erfolgt **nicht in diesem Repository**, sondern in einer
+separaten Mängelmelder-Anwendung.
+
+---
 
 ## Webclient
 
-Zur Ansicht und Bearbeitung der Daten bietet RadVIS einen Webclient, der als Single-Page-Application umgesetzt ist. Zentrales Element ist die Kartenansicht, auf der die Radverkehrsinfrastruktur dargestellt und bearbeitet werden kann. Auf der Karte stehen grundlegende Werkzeuge zur Verfügung wie eine Ortssuche oder ein Messwerkzeug.
+Der RadVIS-Webclient ist als Single-Page-Application umgesetzt.
+Zentrales Element ist die Kartenansicht, in der die Radverkehrsinfrastruktur
+sowie zugehörige Infrastrukturen – einschließlich Mängel – dargestellt
+und bearbeitet werden können.
 
-![RadVIS-Webclient](./radvis-webclient.png "RadVIS-Webclient mit der Karte als zentrales Werkzeug")
+Funktionalitäten des Webclients in diesem Repository:
 
-RadVIS arbeitet auf einem Knoten-Kanten-Modell (Grundnetz), in welchem alle Attribute erfasst werden, die für den Radverkehr relevant sind. Das sind z.B. Belagart, Radverkehrsführung, erlaubte Geschwindigkeit, Baulastträger uvm. Die Attribute können abschnitts- und seitengenau erfasst werden. Die Kanten des Grundnetz können außerdem einzelnen Netzklassen zugeordnet werden, sodass es möglich ist, z.B. nur das Kreisnetz anzuzeigen.
+- Kartenbasierte Darstellung des RadVIS-Grundnetzes
+- Tabellen- und Listenansichten für Infrastrukturen und Mängel
+- Fokus und Hervorhebung von Objekten auf der Karte
+- Attributbearbeitung im Grundnetz
 
-![Grundnetz-Editor](./grundnetz-editor.png "Erfassung diverser Attribute im Grundnetz abschnitts- und seitenbezogen möglich")
+---
 
-Auf dem Grundnetz können weitere Infrastrukturen rund um den Radverkehr erfasst werden. Dies beinhaltet u. A. Fahrradrouten, Maßnahmen, Barrieren und wegweisende Beschilderung. Für jede dieser Infrastrukturen sind spezifische Daten und Prozesse im System modelliert.
+## Backend
 
-![Infrastrukturen-Ansicht](./infrastrukturen-ansicht.png "Anzeige von Infrastrukturen auf der Karte und tabellarisch")
+Das Backend bildet die fachliche Grundlage des RadVIS-Core-Systems und ist
+nach den Prinzipien von Domain-Driven Design modelliert.
 
-Die Infrastrukturen werden als Tabelle und auf der Karte dargestellt. RadVIS bietet verschiedene Formate zum Download an sowie standardisierte Geo-Dienste. Auch ein manueller Upload ist möglich; die Daten werden dann auf das bestehende Netz abgebildet und integriert.
+Zentrale Aufgaben:
 
-Beim Entwickeln des Webclients wurden Gesichtspunkte wie Tastaturbedienbarkeit und Barrierefreiheit berücksichtigt.
+- Verwaltung der fachlichen Entitäten und Prozesse
+- Speicherung und Abfrage von Mängelmeldungen
+- Bereitstellung der Daten für Webclient und externe Anwendungen
+- Integration und Weiterverarbeitung von extern erfassten Mängeln
 
-## Server
+---
 
-Der Server übernimmt 3 wesentliche Aufgaben:
+## Geo-Daten und Dienste
 
-**Verwaltung der Nutzerdaten und fachliche Prozesse.** Dies ist nach den Prinzipien von Domain-Driven Design modelliert.
+Für die Bereitstellung von Geo-Daten in verschiedenen Formaten wird ein
+dedizierter GeoServer eingesetzt.
 
-**Bereitstellung der Geo-Daten in allen erforderlichen Formaten.** Dazu wird ein dedizierter [GeoServer](https://geoserver.org/) bereitgestellt.
+Funktionalitäten:
 
-**Import von Daten und Abgleich dieser mit dem RadVIS-Grundnetz.** Dabei kommen verschiedene Algorithmen und Metriken zum Einsatz, um eine Abbildung der Daten vorzunehmen und deren Güte zu bewerten. Auftretende Probleme werden für Nutzer gesammelt und im Webclient dargestellt.
+- Bereitstellung standardisierter Geo-Dienste
+- Download von Daten in verschiedenen Formaten
+- Integration importierter Daten in das RadVIS-Grundnetz
+
+---
+
+## Abgrenzung: Externe Mängelmelder-App
+
+Die **Mängelmelder-App** ist eine eigenständige Anwendung und befindet sich
+in einem **separaten Repository**.
+
+Aufgaben der Mängelmelder-App:
+
+- Erfassung neuer Mängelmeldungen
+- Standortauswahl über Karte
+- Upload optionaler Fotos
+- Übergabe der Daten an das RadVIS-Core-System
+
+Dieses Repository übernimmt **nicht** die Erfassung, sondern ausschließlich
+die **Weiterverarbeitung, Speicherung und Darstellung** der Mängel im
+RadVIS-Gesamtsystem.
+
+---
 
 ## Kontakt
 
-Bei Interesse an einer Demonstration des Systems wenden Sie sich bitte an [vertrieb@wps.de](mailto:vertrieb@wps.de).
+Bei Interesse an einer Demonstration des RadVIS-Gesamtsystems wenden Sie sich
+bitte an:
 
-### Ausführung der Dokumentation von RadVIS- Maengelmelder
-# Backend-Entwicklung
-Wir unterscheiden im Projekt zwischen der schnellen Mock-API für das Frontend-Testing und dem Core-Backend für die Geschäftslogik.
-
-## API-Schnittstellen (Swagger)
-Für das schnelle Testen der Endpunkte nutzen wir Swagger. Hier kannst du Requests direkt absenden, ohne ein Frontend zu bedienen.
-
-Swagger UI: http://localhost:8080/swagger-ui/index.html
-
-**Alternativ steht auch eine Swagger Doku ohne notwendige Generierung bereit**: https://app.swaggerhub.com/apis/YADIGARCC/radvis_maengelmelder/1.0.0
-
-Nutzen: Dokumentation der REST-Endpunkte.
-
-## Technische Dokumentation (Javadoc)
-Die interne Logik, insbesondere unsere Erweiterungen im mangel-Modul und die Struktur der Entities (Report, Issue), ist über Javadoc dokumentiert.
-
-So generierst du die technische Doku: Da wir Lombok und Checkstyle nutzen, verwende diesen Befehl im backend-Ordner, um Fehler durch generierten Code zu überspringen:
-
-```bash
-mvn javadoc:javadoc -Dcheckstyle.skip -Dspotless.check.skip -Dmaven.javadoc.failOnError=false
-```
-
-**Anzeigen**: Öffne nach dem Build die Datei target/site/apidocs/index.html in deinem Browser.
-
-**Starten des Backends**
-
-Um den Server lokal zu starten:
-```bash
-cd backend
-./mvnw spring-boot:run
-```
-# Frontend (Angular)
-
-Das Frontend dient der Visualisierung und Interaktion für die Nutzer.
-
-## 1. Compodoc generieren
-
-Compodoc erstellt eine Übersicht der Komponenten-Hierarchie und Module:
-```bash
-cd frontend
-npm run compodoc
-```
-
-Die Dokumentation findest du danach unter: `frontend/documentation/index.html`
-
-## 2. Frontend starten
-```bash
-npm install
-npm start
-```
-
-Das Interface ist unter http://localhost:4200 erreichbar.
+vertrieb@wps.de
