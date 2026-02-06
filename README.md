@@ -85,65 +85,8 @@ Dieses Repository übernimmt die **Integration der Mängelmeldungen in RadVIS**,
 einschließlich Speicherung, Verwaltung und Visualisierung im bestehenden
 RadVIS-System.
 
-
-### Ausführung der Dokumentation von RadVIS- Maengelmelder
-# Backend-Entwicklung
-Wir unterscheiden im Projekt zwischen der schnellen Mock-API für das Frontend-Testing und dem Core-Backend für die Geschäftslogik.
-
-## API-Schnittstellen (Swagger)
-Für das schnelle Testen der Endpunkte nutzen wir Swagger. Hier kannst du Requests direkt absenden, ohne ein Frontend zu bedienen.
-
-Swagger UI: http://localhost:8080/swagger-ui/index.html
-
-**Alternativ steht auch eine Swagger Doku ohne notwendige Generierung bereit**: https://app.swaggerhub.com/apis/YADIGARCC/radvis_maengelmelder/1.0.0
-
-Nutzen: Dokumentation der REST-Endpunkte.
-
-## Technische Dokumentation (Javadoc)
-Die interne Logik, insbesondere unsere Erweiterungen im mangel-Modul und die Struktur der Entities (Report, Issue), ist über Javadoc dokumentiert.
-
-So generierst du die technische Doku: Da wir Lombok und Checkstyle nutzen, verwende diesen Befehl im backend-Ordner, um Fehler durch generierten Code zu überspringen:
-
-```bash
-mvn javadoc:javadoc -Dcheckstyle.skip -Dspotless.check.skip -Dmaven.javadoc.failOnError=false
-```
-
-**Anzeigen**: Öffne nach dem Build die Datei target/site/apidocs/index.html in deinem Browser.
-
-**Starten des Backends**
-
-Um den Server lokal zu starten:
-```bash
-cd backend
-./mvnw spring-boot:run
-```
-# Frontend (Angular)
-
-Das Frontend dient der Visualisierung und Interaktion für die Nutzer.
-
-## 1. Compodoc generieren
-
-Compodoc erstellt eine Übersicht der Komponenten-Hierarchie und Module:
-```bash
-cd frontend
-npm run compodoc
-```
-
-Die Dokumentation findest du danach unter: `frontend/documentation/index.html`
-
-## 2. Frontend starten
-```bash
-npm install
-npm start
-```
-
-Das Interface ist unter http://localhost:4200 erreichbar.
-
-## Kontakt
-
-Bei Interesse an einer Demonstration des Systems wenden Sie sich bitte an [vertrieb@wps.de](mailto:vertrieb@wps.de).
-
 ## Ausführung der Dokumentation von RadVIS- Maengelmelder
+
 ### Backend-Entwicklung
 Das Backend enthält die Geschäftslogik und Datenverarbeitung der Anwendung des Mangelmelders.
 
@@ -195,3 +138,7 @@ npm start
 ```
 
 Das Interface ist unter http://localhost:4200 erreichbar.
+
+## Kontakt
+
+Bei Interesse an einer Demonstration des Systems wenden Sie sich bitte an [vertrieb@wps.de](mailto:vertrieb@wps.de).
