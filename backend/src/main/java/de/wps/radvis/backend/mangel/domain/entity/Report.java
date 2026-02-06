@@ -34,20 +34,20 @@ import static org.valid4j.Assertive.require;
  * Ein {@link Report} enthält:
  * </p>
  * <ul>
- *   <li>eine Kategorie/Art des Problems ({@link #issue})</li>
- *   <li>eine optionale Beschreibung ({@link #description})</li>
- *   <li>eine Geometrie/Position als {@link Point} ({@link #geometrie})</li>
- *   <li>den Erstellzeitpunkt ({@link #creationDate})</li>
- *   <li>einen Bearbeitungsstatus ({@link #status})</li>
- *   <li>zugeordnete Fotos ({@link #photos})</li>
+ * <li>eine Kategorie/Art des Problems ({@link #issue})</li>
+ * <li>eine optionale Beschreibung ({@link #description})</li>
+ * <li>eine Geometrie/Position als {@link Point} ({@link #geometrie})</li>
+ * <li>den Erstellzeitpunkt ({@link #creationDate})</li>
+ * <li>einen Bearbeitungsstatus ({@link #status})</li>
+ * <li>zugeordnete Fotos ({@link #photos})</li>
  * </ul>
  *
  * <h2>Fachliche Regeln / Invarianten</h2>
  * <ul>
- *   <li>{@link #geometrie} muss gesetzt sein (nicht {@code null}).</li>
- *   <li>{@link #description} darf maximal {@value #MAX_DESCRIPTION_LENGTH} Zeichen lang sein.</li>
- *   <li>Wenn {@link #issue} nicht angegeben ist, wird {@link Issue#KEINE_KATEGORIE} verwendet.</li>
- *   <li>Neu erstellte Meldungen starten mit {@link ReportStatus#OFFEN}.</li>
+ * <li>{@link #geometrie} muss gesetzt sein (nicht {@code null}).</li>
+ * <li>{@link #description} darf maximal {@value #MAX_DESCRIPTION_LENGTH} Zeichen lang sein.</li>
+ * <li>Wenn {@link #issue} nicht angegeben ist, wird {@link Issue#KEINE_KATEGORIE} verwendet.</li>
+ * <li>Neu erstellte Meldungen starten mit {@link ReportStatus#OFFEN}.</li>
  * </ul>
  *
  * <h2>Persistenz</h2>

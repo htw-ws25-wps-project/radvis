@@ -37,9 +37,9 @@ import static org.valid4j.Assertive.require;
  *
  * <h2>Fachliche Regeln / Invarianten</h2>
  * <ul>
- *   <li>{@link #data} muss gesetzt sein und darf nicht leer sein.</li>
- *   <li>{@link #contentType} muss gesetzt sein.</li>
- *   <li>Erlaubte {@link #contentType Content-Types}: {@code image/jpeg} und {@code image/png}.</li>
+ * <li>{@link #data} muss gesetzt sein und darf nicht leer sein.</li>
+ * <li>{@link #contentType} muss gesetzt sein.</li>
+ * <li>Erlaubte {@link #contentType Content-Types}: {@code image/jpeg} und {@code image/png}.</li>
  * </ul>
  *
  * <h2>Beziehung zur Meldung</h2>

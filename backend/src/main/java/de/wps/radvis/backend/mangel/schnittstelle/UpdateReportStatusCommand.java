@@ -29,10 +29,10 @@ import lombok.Setter;
  */
 public class UpdateReportStatusCommand {
 
-    /**
-     * Neuer Status der Meldung.
-     */
-    @NotNull
-    private ReportStatus status;
+	/**
+	 * Neuer Status der Meldung.
+	 */
+	@NotNull
+	private ReportStatus status;
 
 }
