@@ -1,16 +1,13 @@
-import {ChangeDetectionStrategy, Component, forwardRef, ViewChild} from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, ViewChild } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { AbstractInfrastrukturenFilterService } from
-    'src/app/viewer/viewer-shared/services/abstract-infrastrukturen-filter.service';
-import { SpaltenDefinition } from
-    'src/app/viewer/viewer-shared/models/spalten-definition';
+import { AbstractInfrastrukturenFilterService } from 'src/app/viewer/viewer-shared/services/abstract-infrastrukturen-filter.service';
+import { SpaltenDefinition } from 'src/app/viewer/viewer-shared/models/spalten-definition';
 import { MaengelRoutingService } from '../../services/maengel-routing.service';
-
 import { MaengelFilterService } from '../../services/maengel-filter.service';
 import { MaengelListenView } from '../../models/maengel-listen-view';
-import {MatSort} from "@angular/material/sort";
 
 @Component({
   selector: 'rad-maengel-tabelle',
@@ -18,6 +15,11 @@ import {MatSort} from "@angular/material/sort";
   styleUrls: ['./maengel-tabelle.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
+    /**
+     * Stellt sicher, dass generische Tabellen-/Filter-Komponenten, die gegen
+     * {@link AbstractInfrastrukturenFilterService} injizieren, hier den
+     * {@link MaengelFilterService} erhalten.
+     */
     {
       provide: AbstractInfrastrukturenFilterService,
       useExisting: forwardRef(() => MaengelFilterService),
@@ -25,49 +27,88 @@ import {MatSort} from "@angular/material/sort";
   ],
   standalone: false,
 })
+/**
+ * Tabellen-Komponente für die Mängel-Liste.
+ *
+ * ## Verantwortung
+ * - Zeigt die vom {@link MaengelFilterService} gefilterte Liste an ({@link data$}).
+ * - Stellt die Spaltendefinition für die Tabelle bereit ({@link spaltenDefinition}).
+ * - Reagiert auf Filter-Änderungen und liefert die aktuell sichtbaren Spalten ({@link filteredSpalten$}).
+ * - Navigiert bei Auswahl eines Eintrags in den Mängel-Editor ({@link onSelectRecord}).
+ *
+ * ## Auswahl / Selektion
+ * Die aktuell selektierte Mängel-ID kommt aus dem Routing ({@link selectedMaengelId$}) und
+ * kann im Template z. B. zur Hervorhebung verwendet werden.
+ *
+ * ## Darstellung
+ * {@link getElementValue} kapselt die Anzeige-Logik einzelner Zellen, u. a. das Kürzen langer
+ * Beschreibungen.
+ */
 export class MaengelTabelleComponent {
+  /**
+   * MatSort-Instanz aus der Material-Tabelle.
+   *
+   * Hinweis: wird im aktuellen Code nicht weiter verwendet, ist aber häufig für `matSort`
+   * im Template erforderlich.
+   */
   @ViewChild(MatSort) sort!: MatSort;
 
-  /** Daten aus dem FilterService */
+  /**
+   * Gefilterte Daten (Listeneinträge) aus dem {@link MaengelFilterService}.
+   */
   data$: Observable<MaengelListenView[]>;
+
+  /**
+   * ID des aktuell über das Routing selektierten Mangels (oder `null`).
+   */
   selectedMaengelId$: Observable<number | null>;
 
-  /** Spalten wie bei WPS-Tabellen */
+  /**
+   * Spaltendefinitionen der Tabelle (Anzeige/Labeling).
+   */
   spaltenDefinition: SpaltenDefinition[] = [
-    {name: 'issue', displayName: 'Issue'},
-    {name: 'beschreibung', displayName: 'Beschreibung'},
-    {name: 'status', displayName:'Status'}
+    { name: 'issue', displayName: 'Issue' },
+    { name: 'beschreibung', displayName: 'Beschreibung' },
+    { name: 'status', displayName: 'Status' },
   ];
 
-  /** Gefilterte Spalten */
+  /**
+   * Liste der Feldnamen, die aktuell (durch den Filter) als Spalten angezeigt werden sollen.
+   */
   filteredSpalten$: Observable<string[]>;
 
+  /**
+   * `true`, wenn die Tabelle in einer kleinen Viewport-Variante gerendert werden soll.
+   * Wird über {@link onChangeBreakpointState} gesetzt.
+   */
+  isSmallViewport = false;
 
   constructor(
+    /**
+     * Öffentlich, damit das Template direkt auf Filter-State/Actions zugreifen kann.
+     */
     public maengelFilterService: MaengelFilterService,
     private maengelRoutingService: MaengelRoutingService
   ) {
-    console.log('[MAENGEL TABLE] CONSTRUCTOR');
     this.data$ = this.maengelFilterService.filteredList$;
     this.selectedMaengelId$ = this.maengelRoutingService.selectedInfrastrukturId$;
 
     this.filteredSpalten$ = this.maengelFilterService.filter$.pipe(
       map(filteredFields => filteredFields.map(f => f.field))
     );
-    this.data$.subscribe(d =>
-      console.log('[MAENGEL TABLE] data$', d)
-    );
-
-
-    console.log('MaengelTabelleComponent INIT');
-
   }
 
-  /** 1:1 wie Anpassungswunsch */
-  getElementValue: (item: MaengelListenView, key: string) => string | string[] = (
-    item,
-    key
-  ) => {
+  /**
+   * Liefert den anzuzeigenden Zellwert für eine Spalte.
+   *
+   * Fachliche Sonderlogik:
+   * - `beschreibung` wird ab einer gewissen Länge gekürzt, um die Tabelle kompakt zu halten.
+   *
+   * @param item Datensatz (Tabellenzeile)
+   * @param key Spalten-Key (Feldname)
+   * @returns anzuzeigender Wert (String oder String-Liste)
+   */
+  getElementValue: (item: MaengelListenView, key: string) => string | string[] = (item, key) => {
     const value = (item as any)[key];
 
     if (key === 'beschreibung' && typeof value === 'string' && value.length > 50) {
@@ -76,19 +117,29 @@ export class MaengelTabelleComponent {
 
     return value;
   };
-  isSmallViewport = false;
 
+  /**
+   * Callback für Breakpoint/Responsive-Änderungen.
+   *
+   * @param isSmall `true` wenn kleiner Viewport aktiv ist
+   */
   onChangeBreakpointState(isSmall: boolean): void {
     this.isSmallViewport = isSmall;
   }
 
+  /**
+   * Setzt den Filter auf den Initialzustand zurück.
+   */
   onFilterReset(): void {
     this.maengelFilterService.reset();
   }
 
+  /**
+   * Navigiert in den Editor für den gewählten Mangel.
+   *
+   * @param id ID des ausgewählten Datensatzes
+   */
   onSelectRecord(id: number): void {
     this.maengelRoutingService.toInfrastrukturEditor(id);
   }
-
-
 }

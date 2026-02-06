@@ -13,10 +13,27 @@ import {MaengelService} from "../../services/maengel.service";
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: false,
 })
+/**
+ * Tool-Container für den „Mängel“-Bereich im Viewer.
+ *
+ * ## Verantwortung
+ * - Setzt beim Öffnen den Infrastruktur-Kontext auf {@link MAENGEL} über {@link InfrastrukturenSelektionService}.
+ * - Triggert ein (Neu-)Laden der Daten über {@link MaengelFilterService}.
+ * - Stellt Routing-/UI-Hilfswerte für das Template bereit (z. B. {@link routerLinkActiveOptions}).
+ * - Ermöglicht das Schließen des Tools und die Rücknavigation in den Viewer ({@link onClose}).
+ *
+ * Hinweis: {@link MaengelService} ist injiziert, auch wenn er in dieser Klasse aktuell nicht direkt
+ * genutzt wird (möglicherweise Template-Nutzung oder geplante Erweiterung).
+ */
 export class MaengelToolComponent {
-
+  /**
+   * Route zur Tabellen-Ansicht innerhalb des Tool-Routings.
+   */
   tabelleRoute = ['.'];
 
+  /**
+   * Options für `routerLinkActive`, damit die Tabellen-Route nur bei exaktem Pfad als aktiv gilt.
+   */
   routerLinkActiveOptions: IsActiveMatchOptions = {
     paths: 'exact',
     queryParams: 'ignored',
