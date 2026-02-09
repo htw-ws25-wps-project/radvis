@@ -52,10 +52,6 @@ public class SaveReportCommandConverter {
      */
     private static final long MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
 
-	/**
-	 * Maximale Größe einer einzelnen Datei in Bytes (10 MB).
-	 */
-	private static final long MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
 
 	/**
 	 * Maximale Gesamtgröße aller Dateien in Bytes (30 MB).
