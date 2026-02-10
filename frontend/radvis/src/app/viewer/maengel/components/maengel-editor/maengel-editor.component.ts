@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ViewerRoutingService } from 'src/app/viewer/viewer-shared/services/viewer-routing.service';
@@ -7,6 +7,8 @@ import { map } from 'rxjs/operators';
 import { ReportBackendDTO } from '../../models/report-backend.dto';
 import { MaengelService } from '../../services/maengel.service';
 import { MaengelFilterService } from '../../services/maengel-filter.service';
+import { Subscription } from 'rxjs';
+import { MaengelRoutingService } from '../../services/maengel-routing.service';
 
 /**
  * Editor-Komponente für einen einzelnen Mangel (Report).
@@ -31,7 +33,9 @@ import { MaengelFilterService } from '../../services/maengel-filter.service';
   styleUrls: ['./maengel-editor.component.scss'],
   standalone: false,
 })
-export class MaengelEditorComponent implements DiscardableComponent {
+export class MaengelEditorComponent implements DiscardableComponent, OnDestroy {
+  private subscriptions = new Subscription();
+
   /**
    * Observable des aktuell im Editor angezeigten Mangels.
    *
@@ -61,10 +65,17 @@ export class MaengelEditorComponent implements DiscardableComponent {
     private route: ActivatedRoute,
     private viewerRoutingService: ViewerRoutingService,
     private mangelService: MaengelService,
-    private maengelFilterService: MaengelFilterService
+    private maengelFilterService: MaengelFilterService,
+    private maengelRoutingService: MaengelRoutingService
   ) {
     this.mangel$ = this.route.data.pipe(map((data: Record<string, unknown>) => data['maengel'] as ReportBackendDTO));
-    this.isCreator = (this.route.snapshot.data['isCreator'] as boolean | undefined) ?? false;
+    this.isCreator = (this.route.snapshot.data['isCreator'] as boolean | undefined) ?? false
+
+    this.subscriptions.add(
+      this.maengelRoutingService.forceCloseEditor$.subscribe(() => {
+        this.forceClose = true;
+      })
+    );
   }
 
   /**
@@ -112,6 +123,10 @@ export class MaengelEditorComponent implements DiscardableComponent {
         alert('Status konnte nicht gespeichert werden!');
       },
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }
 

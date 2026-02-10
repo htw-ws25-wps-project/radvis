@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Route, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+
 
 import { AbstractInfrastrukturenRoutingService } from 'src/app/viewer/viewer-shared/services/abstract-infrastrukturen-routing.service';
 import { MAENGEL } from '../models/maengel.infrastruktur';
@@ -24,9 +26,22 @@ import { MaengelEditorComponent } from '../components/maengel-editor/maengel-edi
  * Komponenten (z. B. Tabelle) zur Hervorhebung/Selektion genutzt werden kann.
  */
 export class MaengelRoutingService extends AbstractInfrastrukturenRoutingService {
+  private forceCloseEditorSubject = new Subject<void>();
+  public forceCloseEditor$ = this.forceCloseEditorSubject.asObservable();
+
   constructor(router: Router) {
     super(router, MAENGEL);
   }
+
+  forceCloseEditor(): void {
+    this.forceCloseEditorSubject.next();
+  }
+
+  toInfrastrukturEditorFromTable(id: number): void {
+    this.forceCloseEditor();
+    this.toInfrastrukturEditor(id);
+  }
+
 
   /**
    * Route zur „Erstellen“-Ansicht (Creator-Flow).

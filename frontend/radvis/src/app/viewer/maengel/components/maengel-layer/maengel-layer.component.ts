@@ -15,6 +15,7 @@ import { MAENGEL } from '../../models/maengel.infrastruktur';
 import { MaengelRoutingService } from '../../services/maengel-routing.service';
 import { MaengelFilterService } from '../../services/maengel-filter.service';
 import { MaengelListenView } from '../../models/maengel-listen-view';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'rad-maengel-layer',
@@ -45,6 +46,9 @@ export class MaengelLayerComponent
   extends AbstractInfrastrukturLayerComponent<MaengelListenView>
   implements OnDestroy
 {
+
+  private featureById = new Map<number, Feature<Point>>();
+
   /**
    * Name der Feature-Property, die den Highlight-Zustand trägt.
    *
@@ -67,11 +71,24 @@ export class MaengelLayerComponent
     super(routingService, filterService, featureHighlightService, MAENGEL);
 
     this.olLayer = this.createLayer(0);
-    this.olLayer.setStyle(this.maengelPointStyle);
+    this.olLayer.setStyle(this.styleWithHighlightCircleFn);
     this.olLayer.setZIndex(10);
 
     this.olMapService.addLayer(this.olLayer);
     this.initServiceSubscriptions();
+
+    this.subscriptions.push(
+      this.routingService.selectedInfrastrukturId$
+        .pipe(filter((id): id is number => id !== null))
+        .subscribe(id => {
+          const f = this.vectorSource.getFeatureById(id);
+          const geom = f?.getGeometry();
+
+          if (geom) {
+            this.olMapService.scrollIntoViewByGeometry(geom);
+          }
+        })
+    );
   }
 
   /**
@@ -98,6 +115,9 @@ export class MaengelLayerComponent
 
     const feature = new Feature(new Point(xy));
     feature.setId(infrastruktur.id);
+
+    this.featureById.set(infrastruktur.id, feature);
+
     return [feature];
   }
 
@@ -139,3 +159,4 @@ export class MaengelLayerComponent
     return MaengelLayerComponent.getMaengelIconStyle(highlighted);
   };
 }
+
