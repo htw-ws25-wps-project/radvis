@@ -139,7 +139,8 @@ export class MaengelTabelleComponent {
    *
    * @param id ID des ausgewählten Datensatzes
    */
+
   onSelectRecord(id: number): void {
-    this.maengelRoutingService.toInfrastrukturEditor(id);
+    this.maengelRoutingService.toInfrastrukturEditorFromTable(id);
   }
 }
