@@ -110,13 +110,7 @@ mvn javadoc:javadoc -Dcheckstyle.skip -Dspotless.check.skip -Dmaven.javadoc.fail
 
 **Anzeigen**: Öffne nach dem Build die Datei target/site/apidocs/index.html in deinem Browser.
 
-**Starten des Backends**
 
-Um den Server lokal zu starten:
-```bash
-cd backend
-./mvnw spring-boot:run
-```
 ## Frontend (Angular)
 
 Das Frontend dient der Visualisierung und Interaktion für die Nutzer (z.B. Radverkehrsbetreiber o.ä).
@@ -131,13 +125,6 @@ npm run compodoc
 
 Die Dokumentation findest du danach unter: `frontend/documentation/index.html`
 
-### 2. Frontend starten
-```bash
-npm install
-npm start
-```
-
-Das Interface ist unter http://localhost:4200 erreichbar.
 
 ## Kontakt
 
