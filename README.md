@@ -57,7 +57,7 @@ Aspekte:
   - Beschreibung
   - Geokoordinaten
   - optionalen Fotos
-- Verwaltung des Lebenszyklus einer Mängelmeldung (z. B. Statusänderungen)
+- Einsicht und Verwaltung der Mängelmeldungen im Administrationssystem
 
 ### Backend-Integration
 
@@ -75,6 +75,9 @@ Aspekte:
 - Auswahl einzelner Mängelmeldungen mit:
   - automatischer Fokussierung und Hervorhebung auf der Karte
 - Verknüpfung der Mängelmeldungen mit bestehenden RadVIS-Kartenfunktionen
+- Anzeige der Mängelmeldungen im Editor
+- Änderung des Bearbeitungsstatus von Mängelmeldungen gemäß definiertem Workflow
+- Anzeige der zu einer Mängelmeldung hinterlegten Fotos im Administrationsbereich
 
 ### Abgrenzung zur Mängelmelder-App
 
@@ -85,46 +88,73 @@ Dieses Repository übernimmt die **Integration der Mängelmeldungen in RadVIS**,
 einschließlich Speicherung, Verwaltung und Visualisierung im bestehenden
 RadVIS-System.
 
-## Ausführung der Dokumentation von RadVIS- Maengelmelder
+<img width="1862" height="1089" alt="oie_10121746jYO8HJ2R" src="https://github.com/user-attachments/assets/55281362-35e0-47b9-975e-811c1ac279e3" />
 
-### Backend-Entwicklung
-Das Backend enthält die Geschäftslogik und Datenverarbeitung der Anwendung des Mangelmelders.
 
-### API-Schnittstellen (Swagger)
-Für das schnelle Testen der Endpunkte nutzen wir Swagger. Hier kannst du Requests direkt absenden, ohne ein Frontend zu bedienen.
+## Dokumentation
 
-Swagger UI: http://localhost:8080/swagger-ui/index.html
+Dieses Repository stellt mehrere Ebenen der Dokumentation bereit, um sowohl die
+Nutzung als auch die fachliche und technische Erweiterung des RadVIS-Systems
+durch das integrierte Mängelmodul nachvollziehbar zu machen.
 
-**Alternativ steht auch eine Swagger Doku ohne notwendige Generierung bereit**: https://app.swaggerhub.com/apis/YADIGARCC/radvis_maengelmelder/1.0.0
+### API-Dokumentation (Swagger)
 
-Nutzen: Dokumentation der REST-Endpunkte.
+Die REST-Schnittstellen zur Verarbeitung von Mängelmeldungen sind über Swagger
+dokumentiert. Dies ermöglicht das Testen der Endpunkte ohne separates Frontend.
+
+**Lokale Swagger UI:**
+http://localhost:8080/swagger-ui/index.html
+
+**Externe Swagger-Dokumentation (SwaggerHub):**  
+https://app.swaggerhub.com/apis/YADIGARCC/radvis_maengelmelder/1.0.0
+
+**Zweck:**
+- Dokumentation der REST-Endpunkte
+- Übersicht über Request- und Response-Strukturen
+- Testen der API während der Entwicklung
+
 
 ### Technische Dokumentation (Javadoc)
-Die interne Logik, insbesondere unsere Erweiterungen im mangel-Modul und die Struktur der Entities (Report, Issue), ist über Javadoc dokumentiert.
 
-So generierst du die technische Doku: Da wir Lombok und Checkstyle nutzen, verwende diesen Befehl im backend-Ordner, um Fehler durch generierten Code zu überspringen:
+Die interne Implementierung des integrierten Mängelmoduls, insbesondere die
+fachlichen Erweiterungen im Backend (z. B. Entities, Services und Controller),
+ist über Javadoc dokumentiert.
+
+**Generierung der Javadoc-Dokumentation:**
+
+Da im Projekt Lombok, Checkstyle und Spotless verwendet werden, empfiehlt sich
+folgender Befehl zur Generierung der Dokumentation ohne Build-Abbrüche durch
+generierten Code:
 
 ```bash
-mvn javadoc:javadoc -Dcheckstyle.skip -Dspotless.check.skip -Dmaven.javadoc.failOnError=false
+cd backend
+mvn javadoc:javadoc \
+  -Dcheckstyle.skip \
+  -Dspotless.check.skip \
+  -Dmaven.javadoc.failOnError=false
 ```
+**Anzeige:**
 
-**Anzeigen**: Öffne nach dem Build die Datei target/site/apidocs/index.html in deinem Browser.
+Nach erfolgreicher Generierung kann die Dokumentation im Browser geöffnet
+werden unter:
+backend/target/site/apidocs/index.html
 
+### Frontend-Dokumentation (Compodoc)
 
-## Frontend (Angular)
+Für das Angular-Frontend wird Compodoc zur automatisierten Erstellung einer
+technischen Dokumentation eingesetzt.
 
-Das Frontend dient der Visualisierung und Interaktion für die Nutzer (z.B. Radverkehrsbetreiber o.ä).
+**Generierung der Compodoc-Dokumentation:**
 
-### 1. Compodoc generieren
-
-Compodoc erstellt eine Übersicht der Komponenten-Hierarchie und Module:
 ```bash
 cd frontend
 npm run compodoc
 ```
 
-Die Dokumentation findest du danach unter: `frontend/documentation/index.html`
+**Anzeige:**
 
+Die generierte Dokumentation befindet sich anschließend unter:
+frontend/documentation/index.html
 
 ## Kontakt
 
